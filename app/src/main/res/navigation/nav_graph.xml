@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- nav_graph.xml -->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/challengeListFragment">
+
+    <fragment
+        android:id="@+id/challengeListFragment"
+        android:name="com.iheke.ispy.challenges.presentation.view.ChallengeListFragment"
+        tools:layout="@layout/fragment_challenge_list"
+        android:label="Main Fragment">
+
+        <action
+            android:id="@+id/action_challengeListFragment_to_challengeImageFragment"
+            app:destination="@id/challengeImageFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/challengeImageFragment"
+        android:name="com.iheke.ispy.challenges.presentation.view.ChallengeImageFragment"
+        android:label="Challenge Image Fragment"
+        tools:layout="@layout/fragment_challenge_image">
+
+        <argument
+            android:name="image"
+            app:argType="string" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+    </fragment>
+
+</navigation>
+

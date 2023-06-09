@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">I Spy</string>
+    <string name="near_me">Near Me</string>
+    <string name="distance_to_challenge">%sm</string>
+    <string name="creator_of_challenge">By: %s</string>
+    <plurals name="average_challenge_rating">
+        <item quantity="one">%s star</item>
+        <item quantity="other">%s stars</item>
+    </plurals>
+    <plurals name="number_of_wins">
+        <item quantity="one">%s win</item>
+        <item quantity="other">%s wins</item>
+    </plurals>
+</resources>

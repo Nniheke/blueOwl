@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="8dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{() -> viewModel.onChallengeClicked(challenge.image, challenge.hint)}"
+            android:padding="16dp">
+
+            <!-- Number of wins -->
+            <TextView
+                android:id="@+id/numberOfWinsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@plurals/number_of_wins(challenge.wins,challenge.wins)}"
+                android:textColor="@color/text_grey"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Average challenge rating -->
+            <TextView
+                android:id="@+id/averageRatingTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_grey"
+                app:layout_constraintEnd_toStartOf="@id/distanceTextView"
+                app:layout_constraintStart_toEndOf="@id/numberOfWinsTextView"
+                app:layout_constraintTop_toTopOf="@id/numberOfWinsTextView"
+                app:pluralsWithDouble="@{challenge.rating}" />
+
+            <!-- Distance to the challenge -->
+            <TextView
+                android:id="@+id/distanceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/distance_to_challenge(String.format(`%.2f`, challenge.distance))}"
+                android:textColor="@color/text_grey"
+                android:visibility="@{challenge.distance != 0.0 ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/numberOfWinsTextView" />
+
+            <!-- Challenge hint -->
+            <TextView
+                android:id="@+id/hintTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="24dp"
+                android:text="@{challenge.hint}"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/numberOfWinsTextView" />
+
+            <!-- Challenge creator -->
+            <TextView
+                android:id="@+id/creatorTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/creator_of_challenge(challenge.creator)}"
+                android:textColor="@color/text_grey"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/hintTextView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.iheke.ispy.bindingadapters.PluralsBindingAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.iheke.ispy.challenges.presentation.viewmodel.ChallengeViewModel" />
+
+        <variable
+            name="challenge"
+            type="com.iheke.ispy.challenges.presentation.model.ChallengeUiModel" />
+    </data>
+</layout>
