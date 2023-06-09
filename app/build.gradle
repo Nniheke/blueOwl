@@ -20,6 +20,8 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        buildConfigField "String", "BASE_URL", "\"https://gist.githubusercontent.com\""
+
     }
     dataBinding {
         enabled = true
