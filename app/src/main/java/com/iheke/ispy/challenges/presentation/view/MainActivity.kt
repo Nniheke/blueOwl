@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun observeLocationEvent() {
         lifecycleScope.launch {
-            viewModel.permissionsEvent.collect { event ->
+            viewModel.viewEvent.collect { event ->
                 when (event) {
                     is Event.OpenChallenge -> {}
                     is Event.LocationPermissionGranted -> {

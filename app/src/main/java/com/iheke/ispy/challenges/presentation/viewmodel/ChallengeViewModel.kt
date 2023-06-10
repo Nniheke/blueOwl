@@ -43,7 +43,6 @@ class ChallengeViewModel @Inject constructor(
 
     private val _viewState = MutableStateFlow(ChallengesViewState())
     private val _viewEvent = MutableSharedFlow<Event>()
-    private val _permissionsEvent = MutableSharedFlow<Event>()
 
     /**
      * The current view state of challenges.
@@ -54,11 +53,6 @@ class ChallengeViewModel @Inject constructor(
      * The flow of view events.
      */
     val viewEvent: Flow<Event> = _viewEvent
-
-    /**
-     * The flow of permission events.
-     */
-    val permissionsEvent: Flow<Event> = _permissionsEvent
 
     private var location: Location? = null
 
@@ -180,7 +174,7 @@ class ChallengeViewModel @Inject constructor(
     fun onLocationGranted(granted: Boolean) {
         val event = Event.LocationPermissionGranted(granted)
         viewModelScope.launch {
-            _permissionsEvent.emit(event)
+            _viewEvent.emit(event)
         }
     }
 
