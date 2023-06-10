@@ -82,9 +82,7 @@ class ChallengeListFragment : Fragment() {
                         val navController = activity?.findNavController(R.id.nav_host_fragment)
                         navController?.navigate(action)
                     }
-                    is Event.LocationPermissionGranted -> {
-                        // Handle location permission granted event
-                    }
+                    is Event.LocationPermissionGranted -> {}
                 }
             }
         }

@@ -44,7 +44,7 @@ object AppModule {
      * @return An instance of the PermissionService.
      */
     @Provides
-    fun providePermissionService(app: Application): PermissionService {
+    fun providePermissionService(): PermissionService {
         return PermissionServiceImpl()
     }
 
