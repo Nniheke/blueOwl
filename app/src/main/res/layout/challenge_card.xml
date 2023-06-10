@@ -6,8 +6,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="8dp"
-        app:cardCornerRadius="8dp">
+        android:layout_margin="@dimen/card_view_margin"
+        app:cardCornerRadius="@dimen/card_corner_radius">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -15,7 +15,7 @@
             android:clickable="true"
             android:focusable="true"
             android:onClick="@{() -> viewModel.onChallengeClicked(challenge.image, challenge.hint)}"
-            android:padding="16dp">
+            android:padding="@dimen/constraint_layout_padding">
 
             <!-- Number of wins -->
             <TextView
@@ -54,7 +54,7 @@
                 android:id="@+id/hintTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="24dp"
+                android:layout_marginVertical="@dimen/challenge_hint_vertical_margin"
                 android:text="@{challenge.hint}"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"

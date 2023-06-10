@@ -32,14 +32,11 @@ class PermissionServiceImpl : PermissionService {
         permissions.forEach { permission ->
             if (determinePermissionState(permission.state.ordinal) == PermissionState.REQUEST_PERMISSION) {
                 permissionsToRequest.add(permission)
-                permissionFlow.emit(permissions)
             }
         }
 
         if (permissionsToRequest.isNotEmpty()) {
             val permissionNames = permissionsToRequest.map { it.name }.toTypedArray()
-
-            // Perform the permission request using the Android framework APIs
             val activity = getCurrentActivity()
             if (activity != null) {
                 ActivityCompat.requestPermissions(
@@ -68,7 +65,7 @@ class PermissionServiceImpl : PermissionService {
             permission.copy(state = permissionState)
         }.toSet()
 
-        permissionFlow.emit(updatedPermissions) // Use emit instead of assigning value directly
+        permissionFlow.emit(updatedPermissions)
     }
 
     /**

@@ -36,8 +36,7 @@ class PermissionRepositoryImplTest {
     fun `getPermissions delegates to permissionService`() = coroutineRule.runBlockingTest {
         // Arrange
         val expectedPermissions = setOf(
-            Permission("android.permission.ACCESS_FINE_LOCATION", PermissionState.GRANTED),
-            Permission("android.permission.CAMERA", PermissionState.REQUEST_PERMISSION)
+            Permission("android.permission.ACCESS_FINE_LOCATION", PermissionState.GRANTED)
         )
 
         // Mock the behavior of permissionService.permissions
@@ -56,8 +55,7 @@ class PermissionRepositoryImplTest {
     fun `requestPermissions delegates to permissionService`() = coroutineRule.runBlockingTest {
         // Arrange
         val permissionsToRequest = setOf(
-            Permission("android.permission.ACCESS_FINE_LOCATION", PermissionState.GRANTED),
-            Permission("android.permission.CAMERA", PermissionState.REQUEST_PERMISSION)
+            Permission("android.permission.ACCESS_FINE_LOCATION", PermissionState.GRANTED)
         )
 
         // Act

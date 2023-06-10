@@ -50,7 +50,7 @@ class ChallengeListFragment : Fragment() {
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
         val actionBar = (activity as AppCompatActivity).supportActionBar
-        actionBar?.title = "Near Me"
+        actionBar?.title = getString(R.string.near_me)
         startObservers()
     }
 
