@@ -46,11 +46,7 @@ class ChallengeListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-
-        val actionBar = (activity as AppCompatActivity).supportActionBar
-        actionBar?.title = getString(R.string.near_me)
+        binding.title = getString(R.string.near_me)
         startObservers()
     }
 

@@ -3,6 +3,9 @@
     <data>
         <import type="android.view.View" />
         <variable
+            name="title"
+            type="java.lang.String" />
+        <variable
             name="challengesViewState"
             type="com.iheke.ispy.challenges.presentation.state.ChallengesViewState" />
     </data>
@@ -19,6 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/green_500"
+            app:title="@{title}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
