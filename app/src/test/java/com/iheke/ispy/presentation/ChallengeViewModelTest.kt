@@ -81,21 +81,6 @@ class ChallengeViewModelTest {
     }
 
     @Test
-    fun `onRequestPermissionsResult should call permissionUseCase handlePermissionResult`() =
-        runBlocking {
-            // Arrange
-            val requestCode = 1001
-            val permissions = arrayOf("android.permission.ACCESS_FINE_LOCATION")
-            val grantResults = intArrayOf(android.content.pm.PackageManager.PERMISSION_GRANTED)
-
-            // Act
-            viewModel.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-            // Assert
-            coVerify { permissionUseCase.handlePermissionResult(permissions, grantResults) }
-        }
-
-    @Test
     fun `retrieveCurrentLocation should update location and fetch challenges`() = runBlocking {
         // Arrange
         val location = mockk<Location>()

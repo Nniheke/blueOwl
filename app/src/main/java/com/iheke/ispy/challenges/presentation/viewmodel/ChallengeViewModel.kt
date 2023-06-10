@@ -78,24 +78,6 @@ class ChallengeViewModel @Inject constructor(
     }
 
     /**
-     * Handles the result of permission request.
-     *
-     * @param requestCode The request code of the permission request.
-     * @param permissions The requested permissions.
-     * @param grantResults The grant results for the requested permissions.
-     */
-    fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        viewModelScope.launch {
-            permissionUseCase.handlePermissionResult(permissions, grantResults)
-            onLocationGranted(grantResults.first() == PermissionState.GRANTED.ordinal)
-        }
-    }
-
-    /**
      * Retrieves the current location of the user.
      */
     fun retrieveCurrentLocation() {
@@ -195,7 +177,6 @@ class ChallengeViewModel @Inject constructor(
      *
      * @param granted `true` if the location permission is granted, `false` otherwise.
      */
-    @OpenForTesting
     fun onLocationGranted(granted: Boolean) {
         val event = Event.LocationPermissionGranted(granted)
         viewModelScope.launch {

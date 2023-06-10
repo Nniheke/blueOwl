@@ -4,20 +4,15 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
-import com.iheke.ispy.challenges.domain.permission.Permission
 import com.iheke.ispy.challenges.data.permission.PermissionService
+import com.iheke.ispy.challenges.domain.permission.Permission
 import com.iheke.ispy.challenges.domain.permission.PermissionState
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  * PermissionServiceImpl is an implementation of the [PermissionService] interface
  * that handles permission management using the Android framework APIs.
  */
 class PermissionServiceImpl : PermissionService {
-    private val permissionFlow = MutableStateFlow(emptySet<Permission>())
-
-    override val permissions: Flow<Set<Permission>> = permissionFlow
 
     private val permissionsToRequest = mutableSetOf<Permission>()
 
@@ -46,26 +41,6 @@ class PermissionServiceImpl : PermissionService {
                 )
             }
         }
-    }
-
-    /**
-     * Handles the result of a permission request.
-     *
-     * @param permissions The array of permission names.
-     * @param grantResults The array of grant results corresponding to the permissions.
-     */
-    override suspend fun handlePermissionResult(
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        val permissionMap = permissions.zip(grantResults.toList()).toMap()
-
-        val updatedPermissions = permissionFlow.value.map { permission ->
-            val permissionState = determinePermissionState(permissionMap[permission.name])
-            permission.copy(state = permissionState)
-        }.toSet()
-
-        permissionFlow.emit(updatedPermissions)
     }
 
     /**

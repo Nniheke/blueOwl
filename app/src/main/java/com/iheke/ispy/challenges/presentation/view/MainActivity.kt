@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         // Pass the permission result to the view model for handling
-        viewModel.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        viewModel.onLocationGranted(grantResults.first() == PermissionState.GRANTED.ordinal)
     }
 
     override fun onSupportNavigateUp(): Boolean {
