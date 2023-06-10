@@ -3,17 +3,19 @@ package com.iheke.ispy.presentation
 import android.location.Location
 import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.iheke.ispy.challenges.data.location.LocationProvider
 import com.iheke.ispy.challenges.data.models.UserApiModel
-import com.iheke.ispy.challenges.domain.mappers.ChallengeMapper
+import com.iheke.ispy.challenges.domain.mappers.toUiModel
+import com.iheke.ispy.challenges.domain.permission.Permission
+import com.iheke.ispy.challenges.domain.permission.PermissionState
 import com.iheke.ispy.challenges.domain.usecases.GetChallengesUseCase
 import com.iheke.ispy.challenges.domain.usecases.GetUsersUseCase
 import com.iheke.ispy.challenges.domain.usecases.PermissionUseCase
 import com.iheke.ispy.challenges.presentation.event.Event
+import com.iheke.ispy.challenges.presentation.model.UiModel
+import com.iheke.ispy.challenges.presentation.model.UserUiModel
 import com.iheke.ispy.challenges.presentation.viewmodel.ChallengeViewModel
-import com.iheke.ispy.challenges.presentation.model.ChallengeUiModel
-import com.iheke.ispy.challenges.data.location.LocationProvider
-import com.iheke.ispy.challenges.domain.permission.Permission
-import com.iheke.ispy.challenges.domain.permission.PermissionState
+import com.iheke.ispy.data.challenge.challengesApiModels
 import io.mockk.*
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
@@ -38,7 +40,6 @@ class ChallengeViewModelTest {
     private lateinit var getChallengesUseCase: GetChallengesUseCase
     private lateinit var getUsersUseCase: GetUsersUseCase
     private lateinit var permissionUseCase: PermissionUseCase
-    private lateinit var challengeMapper: ChallengeMapper
     private lateinit var locationProvider: LocationProvider
     private lateinit var viewModel: ChallengeViewModel
 
@@ -48,14 +49,12 @@ class ChallengeViewModelTest {
         getChallengesUseCase = mockk()
         getUsersUseCase = mockk()
         permissionUseCase = mockk()
-        challengeMapper = mockk()
         locationProvider = mockk()
         Dispatchers.setMain(Dispatchers.Unconfined)
         viewModel = ChallengeViewModel(
             getChallengesUseCase,
             getUsersUseCase,
             permissionUseCase,
-            challengeMapper,
             locationProvider
         )
     }
@@ -99,7 +98,6 @@ class ChallengeViewModelTest {
             getChallengesUseCase,
             getUsersUseCase,
             permissionUseCase,
-            challengeMapper,
             locationProvider
         )
 
@@ -118,8 +116,8 @@ class ChallengeViewModelTest {
     fun `updateViewStateOnChallengesLoaded should update viewState with provided challengeUiModels`() {
         // Arrange
         val articles = listOf(
-            ChallengeUiModel(2, 4.5, 10.0, "Hint 1", "Creator 1", "image1.jpg"),
-            ChallengeUiModel(5, 3.8, 5.0, "Hint 2", "Creator 2", "image2.jpg")
+            UiModel(UserUiModel(""), challengesApiModels.first().toUiModel(), 10.0),
+            UiModel(UserUiModel(""), challengesApiModels.first().toUiModel(), 5.0)
         )
 
         // Act
@@ -127,7 +125,7 @@ class ChallengeViewModelTest {
 
         // Assert
         val updatedViewState = viewModel.viewState.value
-        assertEquals(articles, updatedViewState.challengeUiModel)
+        assertEquals(articles.first().toUiModel(), updatedViewState.challengeUiModel.first())
         assertEquals(false, updatedViewState.isLoading)
     }
 

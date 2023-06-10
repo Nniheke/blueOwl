@@ -6,18 +6,17 @@ import android.util.Log
 import androidx.annotation.OpenForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.iheke.ispy.challenges.data.location.LocationProvider
 import com.iheke.ispy.challenges.data.models.UserApiModel
-import com.iheke.ispy.challenges.domain.mappers.ChallengeMapper
+import com.iheke.ispy.challenges.domain.mappers.toUiModel
+import com.iheke.ispy.challenges.domain.permission.Permission
 import com.iheke.ispy.challenges.domain.usecases.GetChallengesUseCase
 import com.iheke.ispy.challenges.domain.usecases.GetUsersUseCase
 import com.iheke.ispy.challenges.domain.usecases.PermissionUseCase
-import com.iheke.ispy.challenges.presentation.model.ChallengeUiModel
-import com.iheke.ispy.utils.LocationUtils
-import com.iheke.ispy.challenges.data.location.LocationProvider
-import com.iheke.ispy.challenges.domain.permission.Permission
-import com.iheke.ispy.challenges.domain.permission.PermissionState
-import com.iheke.ispy.challenges.presentation.state.ChallengesViewState
 import com.iheke.ispy.challenges.presentation.event.Event
+import com.iheke.ispy.challenges.presentation.model.UiModel
+import com.iheke.ispy.challenges.presentation.state.ChallengesViewState
+import com.iheke.ispy.utils.MapperUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -29,7 +28,6 @@ import javax.inject.Inject
  * @property getChallengesUseCase The use case for retrieving challenges.
  * @property getUsersUseCase The use case for retrieving user data.
  * @property permissionUseCase The use case for handling permissions.
- * @property challengeMapper The mapper for mapping challenges to UI models.
  * @property locationProvider The provider for retrieving the user's location.
  */
 @HiltViewModel
@@ -37,7 +35,6 @@ class ChallengeViewModel @Inject constructor(
     private val getChallengesUseCase: GetChallengesUseCase,
     private val getUsersUseCase: GetUsersUseCase,
     private val permissionUseCase: PermissionUseCase,
-    private val challengeMapper: ChallengeMapper,
     private val locationProvider: LocationProvider
 ) : ViewModel() {
 
@@ -112,8 +109,8 @@ class ChallengeViewModel @Inject constructor(
                     // Map challenges and users data to UI models
                     challenges.map { challengeApiModel ->
                         val userApiModel = getUserApiModelById(challengeApiModel.user, users)
-                        val distanceLiveData = location?.let { currentLocation ->
-                            LocationUtils.calculateDistance(
+                        val distance = location?.let { currentLocation ->
+                            MapperUtils.calculateDistance(
                                 currentLocation.latitude,
                                 currentLocation.longitude,
                                 challengeApiModel.location.latitude,
@@ -121,11 +118,8 @@ class ChallengeViewModel @Inject constructor(
                             )
                         } ?: 0.0
 
-                        challengeMapper.mapToUiModel(
-                            challengeApiModel,
-                            userApiModel,
-                            distanceLiveData
-                        )
+                        val userModel = UiModel(userApiModel.toUiModel(),challengeApiModel.toUiModel(), distance)
+                        userModel
                     }
                 }
 
@@ -144,17 +138,18 @@ class ChallengeViewModel @Inject constructor(
     /**
      * Updates the view state when challenges are loaded.
      *
-     * @param articles The list of challenge UI models.
+     * @param uiModel The list of challenge UI models.
      */
     @OpenForTesting
     fun updateViewStateOnChallengesLoaded(
-        articles: List<ChallengeUiModel>
+        uiModel: List<UiModel>
     ) {
         _viewState.value = _viewState.value.copy(
-            challengeUiModel = articles.map { it },
+            challengeUiModel = uiModel.map { it.toUiModel() },
             isLoading = false
         )
     }
+
 
     /**
      * Retrieves the user API model by its ID from the given list.
