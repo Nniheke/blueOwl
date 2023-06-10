@@ -81,7 +81,7 @@ class ChallengeViewModel @Inject constructor(
                 fetchChallenges()
             },
             onFailure = { exception ->
-                Log.e("MainViewModel", "Failed to retrieve location: ${exception.message}")
+                Log.e("ChallengeViewModel", "Failed to retrieve location: ${exception.message}")
                 fetchChallenges()
             }
         )
@@ -98,38 +98,45 @@ class ChallengeViewModel @Inject constructor(
     }
 
     /**
-     * Fetches the challenges from the repository and updates the view state accordingly.
+     * Fetches challenges and users data, combines them, maps them to UI models, and updates the view state.
      */
     private fun fetchChallenges() {
         viewModelScope.launch {
             try {
-                val challengesApiModels = getChallengesUseCase.execute().first()
-                val userApiModels = getUsersUseCase.execute().first()
+                // Fetch challenges and users data
+                val challengesApiModels = getChallengesUseCase.execute()
+                val userApiModels = getUsersUseCase.execute()
 
-                val uiModels = challengesApiModels.map { challengeApiModel ->
-                    val userApiModel = getUserApiModelById(challengeApiModel.user, userApiModels)
-                    val distanceLiveData = location?.let { currentLocation ->
-                        LocationUtils.calculateDistance(
-                            currentLocation.latitude,
-                            currentLocation.longitude,
-                            challengeApiModel.location.latitude,
-                            challengeApiModel.location.longitude
+                // Combine challenges and users data using zip operator
+                val combinedFlow = challengesApiModels.zip(userApiModels) { challenges, users ->
+                    // Map challenges and users data to UI models
+                    challenges.map { challengeApiModel ->
+                        val userApiModel = getUserApiModelById(challengeApiModel.user, users)
+                        val distanceLiveData = location?.let { currentLocation ->
+                            LocationUtils.calculateDistance(
+                                currentLocation.latitude,
+                                currentLocation.longitude,
+                                challengeApiModel.location.latitude,
+                                challengeApiModel.location.longitude
+                            )
+                        } ?: 0.0
+
+                        challengeMapper.mapToUiModel(
+                            challengeApiModel,
+                            userApiModel,
+                            distanceLiveData
                         )
-                    } ?: 0.0
-
-                    challengeMapper.mapToUiModel(
-                        challengeApiModel,
-                        userApiModel,
-                        distanceLiveData
-                    )
+                    }
                 }
 
-                val sortedUiModels = uiModels.sortedBy { it.distance }
-
-                updateViewStateOnChallengesLoaded(sortedUiModels)
+                // Collect the combined flow of UI models and update the view state
+                combinedFlow.collect { uiModels ->
+                    val sortedUiModels = uiModels.sortedBy { it.distance }
+                    updateViewStateOnChallengesLoaded(sortedUiModels)
+                }
 
             } catch (e: Exception) {
-                Log.e("MainViewModel", "Failed to fetch challenges: ${e.message}")
+                Log.e("ChallengeViewModel", "Failed to fetch challenges: ${e.message}")
             }
         }
     }
