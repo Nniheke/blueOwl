@@ -215,7 +215,7 @@ class ChallengeViewModelTest {
             // Act
 
             val collectJob = launch {
-                viewModel.permissionsEvent.collect { event ->
+                viewModel.viewEvent.collect { event ->
                     eventDeferred.complete(event)
                 }
             }
