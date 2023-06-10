@@ -71,63 +71,42 @@ dependencies {
     def mockk_version = "1.12.0"
     def core_testing_version = "2.1.0"
     def coroutines_test_version = "1.6.0"
-    def junit_ext_version = "1.1.5"
-    def espresso_core_version = "3.5.1"
     def robolectric_version = "4.6.1"
-    def rules_version = "1.4.0"
-    def espresso_contrib_version = "3.4.0"
-    def coroutines_android_version = "1.5.2"
-    def fragment_testing_version = "1.4.0"
-    def mockito_android_version = "3.2.4"
-    def hilt_testing_version = "2.46.1"
 
-    implementation "androidx.core:core-ktx:${ktx_version}"
-    implementation "androidx.appcompat:appcompat:${app_component_version}"
-    implementation "com.google.android.material:material:${material_version}"
-    implementation "androidx.constraintlayout:constraintlayout:${constraint_layout_version}"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${lifecycle_version}"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycle_version}"
-    implementation "androidx.activity:activity-ktx:${activity_version}"
-    implementation "androidx.fragment:fragment-ktx:${fragment_version}"
-    implementation "com.google.android.gms:play-services-location:${play_services_location_version}"
+    implementation "androidx.core:core-ktx:$ktx_version"
+    implementation "androidx.appcompat:appcompat:$app_component_version"
+    implementation "com.google.android.material:material:$material_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.activity:activity-ktx:$activity_version"
+    implementation "androidx.fragment:fragment-ktx:$fragment_version"
+    implementation "com.google.android.gms:play-services-location:$play_services_location_version"
 
     // Kotlin
-    implementation("androidx.navigation:navigation-fragment-ktx:${nav_version}")
-    implementation("androidx.navigation:navigation-ui-ktx:${nav_version}")
-    implementation("androidx.navigation:navigation-dynamic-features-fragment:${nav_version}")
-    debugImplementation("androidx.navigation:navigation-testing:${nav_version}")
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+    debugImplementation "androidx.navigation:navigation-testing:$nav_version"
 
     // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:${retrofit_version}")
-    implementation("com.squareup.retrofit2:converter-gson:${retrofit_version}")
-    implementation("com.squareup.okhttp3:logging-interceptor:${interceptor_version}")
-    implementation("io.coil-kt:coil:${coil_version}")
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$interceptor_version"
+    implementation "io.coil-kt:coil:$coil_version"
 
     // Retrofit Coroutines Adapter
-    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:${retrofit_coroutines_adapter_version}"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:$retrofit_coroutines_adapter_version"
 
-    //Hilt
-    implementation "com.google.dagger:hilt-android:${hilt_version}"
-    kapt "com.google.dagger:hilt-android-compiler:${hilt_version}"
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     // Testing Dependencies
-    testImplementation "junit:junit:${junit_version}"
-    testImplementation "io.mockk:mockk:${mockk_version}"
-    testImplementation "androidx.arch.core:core-testing:${core_testing_version}"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:${coroutines_test_version}"
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation "androidx.arch.core:core-testing:$core_testing_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_test_version"
+    testImplementation "org.robolectric:robolectric:$robolectric_version"
 
-    debugImplementation "androidx.test.ext:junit:${junit_ext_version}"
-    debugImplementation "androidx.test.espresso:espresso-core:${espresso_core_version}"
-    testImplementation "org.robolectric:robolectric:${robolectric_version}"
-
-    debugImplementation "androidx.test:rules:${rules_version}"
-    debugImplementation "androidx.test.espresso:espresso-core:${espresso_core_version}"
-    debugImplementation "androidx.test.espresso:espresso-contrib:${espresso_contrib_version}"
-    debugImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutines_android_version}"
-    debugImplementation "androidx.fragment:fragment-testing:${fragment_testing_version}"
-
-    androidTestAnnotationProcessor "com.google.dagger:hilt-compiler:${hilt_version}"
-    debugImplementation "org.mockito:mockito-android:${mockito_android_version}"
-    androidTestImplementation "com.google.dagger:hilt-android-testing:${hilt_testing_version}"
-    kaptAndroidTest "com.google.dagger:hilt-android-compiler:${hilt_version}"
 }
