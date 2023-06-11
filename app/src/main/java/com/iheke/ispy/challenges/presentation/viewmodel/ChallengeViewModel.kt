@@ -7,16 +7,13 @@ import androidx.annotation.OpenForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iheke.ispy.challenges.data.location.LocationProvider
-import com.iheke.ispy.challenges.data.models.UserApiModel
 import com.iheke.ispy.challenges.domain.mappers.toUiModel
 import com.iheke.ispy.challenges.domain.permission.Permission
-import com.iheke.ispy.challenges.domain.usecases.GetChallengesUseCase
-import com.iheke.ispy.challenges.domain.usecases.GetUsersUseCase
+import com.iheke.ispy.challenges.domain.usecases.FetchChallengesUseCase
 import com.iheke.ispy.challenges.domain.usecases.PermissionUseCase
 import com.iheke.ispy.challenges.presentation.event.Event
 import com.iheke.ispy.challenges.presentation.model.UiModel
 import com.iheke.ispy.challenges.presentation.state.ChallengesViewState
-import com.iheke.ispy.utils.MapperUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -25,15 +22,13 @@ import javax.inject.Inject
 /**
  * ViewModel class for managing challenges and related data.
  *
- * @property getChallengesUseCase The use case for retrieving challenges.
- * @property getUsersUseCase The use case for retrieving user data.
+ * @property fetchChallengesUseCase The use case for retrieving challenges.
  * @property permissionUseCase The use case for handling permissions.
  * @property locationProvider The provider for retrieving the user's location.
  */
 @HiltViewModel
 class ChallengeViewModel @Inject constructor(
-    private val getChallengesUseCase: GetChallengesUseCase,
-    private val getUsersUseCase: GetUsersUseCase,
+    private val fetchChallengesUseCase: FetchChallengesUseCase,
     private val permissionUseCase: PermissionUseCase,
     private val locationProvider: LocationProvider
 ) : ViewModel() {
@@ -95,43 +90,12 @@ class ChallengeViewModel @Inject constructor(
     }
 
     /**
-     * Fetches challenges and users data, combines them, maps them to UI models, and updates the view state.
+     * Fetches challenges and updates the view state.
      */
     private fun fetchChallenges() {
         viewModelScope.launch {
-            try {
-                // Fetch challenges and users data
-                val challengesApiModels = getChallengesUseCase.execute()
-                val userApiModels = getUsersUseCase.execute()
-
-                // Combine challenges and users data using zip operator
-                val combinedFlow = challengesApiModels.zip(userApiModels) { challenges, users ->
-                    // Map challenges and users data to UI models
-                    challenges.map { challengeApiModel ->
-                        val userApiModel = getUserApiModelById(challengeApiModel.user, users)
-                        val distance = location?.let { currentLocation ->
-                            MapperUtils.calculateDistance(
-                                currentLocation.latitude,
-                                currentLocation.longitude,
-                                challengeApiModel.location.latitude,
-                                challengeApiModel.location.longitude
-                            )
-                        } ?: 0.0
-
-                        val userModel = UiModel(userApiModel.toUiModel(),challengeApiModel.toUiModel(), distance)
-                        userModel
-                    }
-                }
-
-                // Collect the combined flow of UI models and update the view state
-                combinedFlow.collect { uiModels ->
-                    val sortedUiModels = uiModels.sortedBy { it.distance }
-                    updateViewStateOnChallengesLoaded(sortedUiModels)
-                }
-
-            } catch (e: Exception) {
-                Log.e("ChallengeViewModel", "Failed to fetch challenges: ${e.message}")
-            }
+            val uiModels = location?.let { fetchChallengesUseCase.execute(it)}?.first()
+            uiModels?.let{updateViewStateOnChallengesLoaded(uiModels)}
         }
     }
 
@@ -148,24 +112,6 @@ class ChallengeViewModel @Inject constructor(
             challengeUiModel = uiModel.map { it.toUiModel() },
             isLoading = false
         )
-    }
-
-
-    /**
-     * Retrieves the user API model by its ID from the given list.
-     *
-     * @param userId The ID of the user API model to retrieve.
-     * @param userApiModels The list of user API models.
-     * @return The user API model with the specified ID.
-     * @throws NoSuchElementException if the user API model with the specified ID is not found.
-     */
-    @OpenForTesting
-    fun getUserApiModelById(
-        userId: String,
-        userApiModels: List<UserApiModel>
-    ): UserApiModel {
-        return userApiModels.firstOrNull { it.id == userId }
-            ?: throw NoSuchElementException("UserApiModel with id $userId not found.")
     }
 
     /**

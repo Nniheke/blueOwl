@@ -1,15 +1,12 @@
 package com.iheke.ispy.presentation
 
 import android.location.Location
-import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.iheke.ispy.challenges.data.location.LocationProvider
-import com.iheke.ispy.challenges.data.models.UserApiModel
 import com.iheke.ispy.challenges.domain.mappers.toUiModel
 import com.iheke.ispy.challenges.domain.permission.Permission
 import com.iheke.ispy.challenges.domain.permission.PermissionState
-import com.iheke.ispy.challenges.domain.usecases.GetChallengesUseCase
-import com.iheke.ispy.challenges.domain.usecases.GetUsersUseCase
+import com.iheke.ispy.challenges.domain.usecases.FetchChallengesUseCase
 import com.iheke.ispy.challenges.domain.usecases.PermissionUseCase
 import com.iheke.ispy.challenges.presentation.event.Event
 import com.iheke.ispy.challenges.presentation.model.UiModel
@@ -37,8 +34,7 @@ class ChallengeViewModelTest {
     private val testDispatcher = TestCoroutineDispatcher()
 
 
-    private lateinit var getChallengesUseCase: GetChallengesUseCase
-    private lateinit var getUsersUseCase: GetUsersUseCase
+    private lateinit var fetchChallengesUseCase: FetchChallengesUseCase
     private lateinit var permissionUseCase: PermissionUseCase
     private lateinit var locationProvider: LocationProvider
     private lateinit var viewModel: ChallengeViewModel
@@ -46,14 +42,12 @@ class ChallengeViewModelTest {
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
-        getChallengesUseCase = mockk()
-        getUsersUseCase = mockk()
+        fetchChallengesUseCase = mockk()
         permissionUseCase = mockk()
         locationProvider = mockk()
         Dispatchers.setMain(Dispatchers.Unconfined)
         viewModel = ChallengeViewModel(
-            getChallengesUseCase,
-            getUsersUseCase,
+            fetchChallengesUseCase,
             permissionUseCase,
             locationProvider
         )
@@ -85,7 +79,6 @@ class ChallengeViewModelTest {
         val location = mockk<Location>()
         val onSuccess = slot<(Location) -> Unit>()
         val onFailure = slot<(Exception) -> Unit>()
-        val logger = mockk<Log>(relaxed = true)
 
         coEvery {
             locationProvider.getCurrentLocation(
@@ -95,8 +88,7 @@ class ChallengeViewModelTest {
         } just Runs
 
         val viewModel = ChallengeViewModel(
-            getChallengesUseCase,
-            getUsersUseCase,
+            fetchChallengesUseCase,
             permissionUseCase,
             locationProvider
         )
@@ -109,7 +101,7 @@ class ChallengeViewModelTest {
 
         // Assert
         assertEquals(location, viewModel.getUserLocation())
-        coVerify { getChallengesUseCase.execute() }
+        coVerify { fetchChallengesUseCase.execute(location) }
     }
 
     @Test
@@ -127,43 +119,6 @@ class ChallengeViewModelTest {
         val updatedViewState = viewModel.viewState.value
         assertEquals(articles.first().toUiModel(), updatedViewState.challengeUiModel.first())
         assertEquals(false, updatedViewState.isLoading)
-    }
-
-    @Test
-    fun `getUserApiModelById should return matching UserApiModel when userId exists`() {
-        // Arrange
-        val userId = "user_id"
-        val userApiModels = listOf(
-            UserApiModel("user_id_1", "email1@example.com", "user1"),
-            UserApiModel(userId, "email2@example.com", "user2"),
-            UserApiModel("user_id_3", "email3@example.com", "user3")
-        )
-
-        // Act
-        val result = viewModel.getUserApiModelById(userId, userApiModels)
-
-        // Assert
-        assertEquals(userApiModels[1], result)
-    }
-
-    @Test
-    fun `getUserApiModelById should throw NoSuchElementException when userId does not exist`() {
-        // Arrange
-        val userId = "non_existing_user_id"
-        val userApiModels = listOf(
-            UserApiModel("user_id_1", "email1@example.com", "user1"),
-            UserApiModel("user_id_2", "email2@example.com", "user2"),
-            UserApiModel("user_id_3", "email3@example.com", "user3")
-        )
-        // Act and Assert
-        var exceptionThrown = false
-        try {
-            viewModel.getUserApiModelById(userId, userApiModels)
-        } catch (e: NoSuchElementException) {
-            exceptionThrown = true
-        }
-
-        assertTrue(exceptionThrown)
     }
 
     @Test
