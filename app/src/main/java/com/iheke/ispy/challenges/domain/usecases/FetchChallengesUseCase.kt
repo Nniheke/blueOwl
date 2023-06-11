@@ -5,6 +5,8 @@ import android.util.Log
 import com.iheke.ispy.challenges.domain.mappers.toUiModel
 import com.iheke.ispy.challenges.presentation.model.UiModel
 import com.iheke.ispy.utils.MapperUtils
+import com.iheke.ispy.utils.MapperUtils.calculateAverageRating
+import com.iheke.ispy.utils.MapperUtils.calculateNumberOfWins
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -47,9 +49,13 @@ class FetchChallengesUseCase @Inject constructor(
 
                     val uiModel = UiModel(
                         userApiModel.toUiModel(),
-                        challengeApiModel.toUiModel(),
-                        distance
+                        challengeApiModel.toUiModel().copy(
+                            wins = calculateNumberOfWins(challengeApiModel.matches),
+                            rating = calculateAverageRating(challengeApiModel.ratings)
+                        ),
+                        distance = distance
                     )
+
                     uiModel
                 }.sortedBy { it.distance }
             }
@@ -60,4 +66,6 @@ class FetchChallengesUseCase @Inject constructor(
             throw e
         }
     }
+
+
 }

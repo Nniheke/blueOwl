@@ -15,8 +15,6 @@ import com.iheke.ispy.utils.MapperUtils.calculateNumberOfWins
  * @return The converted ChallengesUiModel.
  */
 fun ChallengesApiModel.toUiModel() = ChallengesUiModel(
-    wins = calculateNumberOfWins(matches),
-    rating = calculateAverageRating(ratings),
     hint = hint,
     image = photo
 )

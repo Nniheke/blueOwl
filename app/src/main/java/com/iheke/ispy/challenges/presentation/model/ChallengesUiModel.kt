@@ -9,8 +9,8 @@ package com.iheke.ispy.challenges.presentation.model
  * @property image The image associated with the challenge.
  */
 data class ChallengesUiModel(
-    val wins: Int,
-    val rating: Double,
+    val wins: Int = 0,
+    val rating: Double = 0.0,
     val hint: String,
     val image: String
 )
