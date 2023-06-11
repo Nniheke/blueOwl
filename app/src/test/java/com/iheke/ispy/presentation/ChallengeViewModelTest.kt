@@ -69,7 +69,7 @@ class ChallengeViewModelTest {
         viewModel.requestPermissions(permissions)
 
         // Assert
-        coVerify { permissionUseCase.requestPermissions(permissions) }
+        coVerify { permissionUseCase.execute(permissions) }
     }
 
     @Test

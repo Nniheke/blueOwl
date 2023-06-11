@@ -39,7 +39,7 @@ class PermissionUseCaseTest {
         coEvery { mockRepository.requestPermissions(any()) } just runs
 
         // Act
-        useCase.requestPermissions(permissionsToRequest)
+        useCase.execute(permissionsToRequest)
 
         // Assert
         coVerify { mockRepository.requestPermissions(permissionsToRequest) }

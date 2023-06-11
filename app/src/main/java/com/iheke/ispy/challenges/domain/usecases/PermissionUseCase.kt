@@ -16,7 +16,7 @@ class PermissionUseCase @Inject constructor(private val permissionRepository: Pe
      *
      * @param permissions The set of permissions to request.
      */
-    suspend fun requestPermissions(permissions: Set<Permission>) {
+    suspend fun execute(permissions: Set<Permission>) {
         permissionRepository.requestPermissions(permissions)
     }
 

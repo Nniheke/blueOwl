@@ -55,7 +55,7 @@ class ChallengeViewModel @Inject constructor(
             val locationPermission =
                 permissions.firstOrNull { it.name == Manifest.permission.ACCESS_FINE_LOCATION }
             if (locationPermission != null) {
-                permissionUseCase.requestPermissions(permissions)
+                permissionUseCase.execute(permissions)
             }
         }
     }
