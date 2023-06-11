@@ -8,12 +8,23 @@ import com.iheke.ispy.utils.MapperUtils
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
-class FetchChallengesUseCase @Inject constructor(private val getChallengesUseCase: GetChallengesUseCase, private val getUsersUseCase: GetUsersUseCase) {
-
+/**
+ * Use case for fetching challenges and users data, combining them, and mapping them to UI models.
+ *
+ * @param getChallengesUseCase The use case for fetching challenges data.
+ * @param getUsersUseCase The use case for fetching users data.
+ */
+class FetchChallengesUseCase @Inject constructor(
+    private val getChallengesUseCase: GetChallengesUseCase,
+    private val getUsersUseCase: GetUsersUseCase
+) {
     /**
-     * Fetches challenges and users data, combines them, maps them to UI models.
+     * Fetches challenges and users data, combines them, maps them to UI models, and returns as a flow of lists of [UiModel].
+     *
+     * @param location The current location.
+     * @return A flow of lists of [UiModel] representing the combined and sorted UI models.
      */
-
+    @Throws(Exception::class)
     suspend fun execute(location: Location): Flow<List<UiModel>> {
         try {
             // Fetch challenges and users data
@@ -32,10 +43,13 @@ class FetchChallengesUseCase @Inject constructor(private val getChallengesUseCas
                             challengeApiModel.location.latitude,
                             challengeApiModel.location.longitude
                         )
-                    } ?: 0.0
+                    }
 
-                    val uiModel =
-                        UiModel(userApiModel.toUiModel(), challengeApiModel.toUiModel(), distance)
+                    val uiModel = UiModel(
+                        userApiModel.toUiModel(),
+                        challengeApiModel.toUiModel(),
+                        distance
+                    )
                     uiModel
                 }.sortedBy { it.distance }
             }
@@ -43,7 +57,7 @@ class FetchChallengesUseCase @Inject constructor(private val getChallengesUseCas
             return combinedFlow
         } catch (e: Exception) {
             Log.e("FetchChallengesUseCase", "Failed to fetch challenges: ${e.message}")
+            throw e
         }
-        return flowOf()
     }
 }
