@@ -1,7 +1,6 @@
 package com.iheke.ispy.domain.usecase
 
 import android.location.Location
-import com.iheke.ispy.challenges.data.location.LocationProvider
 import com.iheke.ispy.challenges.domain.usecases.FetchChallengesUseCase
 import com.iheke.ispy.challenges.domain.usecases.GetChallengesUseCase
 import com.iheke.ispy.challenges.domain.usecases.GetUsersUseCase
@@ -25,13 +24,10 @@ class FetchChallengesUseCaseTest {
     private lateinit var getUsersUseCase: GetUsersUseCase
     private lateinit var fetchChallengesUseCase: FetchChallengesUseCase
 
-    private lateinit var locationProvider: LocationProvider
-
     @Before
     fun setup() {
         getChallengesUseCase = mockk()
         getUsersUseCase = mockk()
-        locationProvider = mockk()
         fetchChallengesUseCase =
             FetchChallengesUseCase(getChallengesUseCase, getUsersUseCase)
     }
