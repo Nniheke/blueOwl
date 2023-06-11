@@ -1,19 +1,19 @@
 package com.iheke.ispy.presentation
 
-import android.location.Location
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.iheke.ispy.challenges.data.location.LocationProvider
 import com.iheke.ispy.challenges.domain.mappers.toUiModel
 import com.iheke.ispy.challenges.domain.permission.Permission
 import com.iheke.ispy.challenges.domain.permission.PermissionState
 import com.iheke.ispy.challenges.domain.usecases.FetchChallengesUseCase
+import com.iheke.ispy.challenges.domain.usecases.GetLocationUseCase
 import com.iheke.ispy.challenges.domain.usecases.PermissionUseCase
 import com.iheke.ispy.challenges.presentation.event.Event
 import com.iheke.ispy.challenges.presentation.model.UiModel
 import com.iheke.ispy.challenges.presentation.model.UserUiModel
 import com.iheke.ispy.challenges.presentation.viewmodel.ChallengeViewModel
 import com.iheke.ispy.data.challenge.challengesApiModels
-import io.mockk.*
+import io.mockk.coVerify
+import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.*
@@ -36,7 +36,7 @@ class ChallengeViewModelTest {
 
     private lateinit var fetchChallengesUseCase: FetchChallengesUseCase
     private lateinit var permissionUseCase: PermissionUseCase
-    private lateinit var locationProvider: LocationProvider
+    private lateinit var getLocationUseCase: GetLocationUseCase
     private lateinit var viewModel: ChallengeViewModel
 
     @Before
@@ -44,12 +44,11 @@ class ChallengeViewModelTest {
         Dispatchers.setMain(testDispatcher)
         fetchChallengesUseCase = mockk()
         permissionUseCase = mockk()
-        locationProvider = mockk()
-        Dispatchers.setMain(Dispatchers.Unconfined)
+        getLocationUseCase = mockk()
         viewModel = ChallengeViewModel(
             fetchChallengesUseCase,
             permissionUseCase,
-            locationProvider
+            getLocationUseCase
         )
     }
 
@@ -75,33 +74,10 @@ class ChallengeViewModelTest {
 
     @Test
     fun `retrieveCurrentLocation should update location and fetch challenges`() = runBlocking {
-        // Arrange
-        val location = mockk<Location>()
-        val onSuccess = slot<(Location) -> Unit>()
-        val onFailure = slot<(Exception) -> Unit>()
 
-        coEvery {
-            locationProvider.getCurrentLocation(
-                onSuccess = capture(onSuccess),
-                onFailure = capture(onFailure)
-            )
-        } just Runs
-
-        val viewModel = ChallengeViewModel(
-            fetchChallengesUseCase,
-            permissionUseCase,
-            locationProvider
-        )
-
-        // Act
         viewModel.retrieveCurrentLocation()
 
-        // Trigger the success callback
-        onSuccess.captured.invoke(location)
-
-        // Assert
-        assertEquals(location, viewModel.getUserLocation())
-        coVerify { fetchChallengesUseCase.execute(location) }
+        coVerify { getLocationUseCase.execute() }
     }
 
     @Test

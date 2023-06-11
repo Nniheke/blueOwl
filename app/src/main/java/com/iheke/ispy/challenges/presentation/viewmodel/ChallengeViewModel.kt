@@ -2,14 +2,13 @@ package com.iheke.ispy.challenges.presentation.viewmodel
 
 import android.Manifest
 import android.location.Location
-import android.util.Log
 import androidx.annotation.OpenForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.iheke.ispy.challenges.data.location.LocationProvider
 import com.iheke.ispy.challenges.domain.mappers.toUiModel
 import com.iheke.ispy.challenges.domain.permission.Permission
 import com.iheke.ispy.challenges.domain.usecases.FetchChallengesUseCase
+import com.iheke.ispy.challenges.domain.usecases.GetLocationUseCase
 import com.iheke.ispy.challenges.domain.usecases.PermissionUseCase
 import com.iheke.ispy.challenges.presentation.event.Event
 import com.iheke.ispy.challenges.presentation.model.UiModel
@@ -24,13 +23,13 @@ import javax.inject.Inject
  *
  * @property fetchChallengesUseCase The use case for retrieving challenges.
  * @property permissionUseCase The use case for handling permissions.
- * @property locationProvider The provider for retrieving the user's location.
+ * @property getLocationUseCase The use case for retrieving the user's location.
  */
 @HiltViewModel
 class ChallengeViewModel @Inject constructor(
     private val fetchChallengesUseCase: FetchChallengesUseCase,
     private val permissionUseCase: PermissionUseCase,
-    private val locationProvider: LocationProvider
+    private val getLocationUseCase: GetLocationUseCase
 ) : ViewModel() {
 
     private val _viewState = MutableStateFlow(ChallengesViewState())
@@ -45,8 +44,6 @@ class ChallengeViewModel @Inject constructor(
      * The flow of view events.
      */
     val viewEvent: Flow<Event> = _viewEvent
-
-    private var location: Location? = null
 
     /**
      * Requests the specified permissions.
@@ -67,35 +64,20 @@ class ChallengeViewModel @Inject constructor(
      * Retrieves the current location of the user.
      */
     fun retrieveCurrentLocation() {
-        locationProvider.getCurrentLocation(
-            onSuccess = { location ->
-                this.location = location
-                fetchChallenges()
-            },
-            onFailure = { exception ->
-                Log.e("ChallengeViewModel", "Failed to retrieve location: ${exception.message}")
-                fetchChallenges()
+        viewModelScope.launch {
+            getLocationUseCase.execute().collect {
+                fetchChallenges(it)
             }
-        )
-    }
-
-    /**
-     * Retrieves the user's current location.
-     *
-     * @return The user's current location, or null if the location is not available.
-     */
-    @OpenForTesting
-    fun getUserLocation(): Location? {
-        return location
+        }
     }
 
     /**
      * Fetches challenges and updates the view state.
      */
-    private fun fetchChallenges() {
+    private fun fetchChallenges(location: Location) {
         viewModelScope.launch {
-            val uiModels = location?.let { fetchChallengesUseCase.execute(it)}?.first()
-            uiModels?.let{updateViewStateOnChallengesLoaded(uiModels)}
+            val uiModels = fetchChallengesUseCase.execute(location).first()
+            updateViewStateOnChallengesLoaded(uiModels)
         }
     }
 

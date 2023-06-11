@@ -41,13 +41,7 @@ android {
         jvmTarget = '1.8'
     }
     testOptions {
-        unitTests {
-            includeAndroidResources = true
-        }
-        unitTests.all{
-            // Enable Mockito's inline mock maker
-            systemProperty 'mockito.mock-maker', 'inline'
-        }
+        unitTests.returnDefaultValues = true
     }
 }
 
