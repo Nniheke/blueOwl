@@ -1,4 +1,4 @@
-package com.iheke.ispy.bindingadapters
+package com.iheke.ispy.challenges.presentation.adapters
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter

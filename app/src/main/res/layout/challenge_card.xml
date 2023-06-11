@@ -79,7 +79,7 @@
 
         <import type="android.view.View" />
 
-        <import type="com.iheke.ispy.bindingadapters.PluralsBindingAdapter" />
+        <import type="com.iheke.ispy.challenges.presentation.adapters.PluralsBindingAdapter" />
 
         <variable
             name="viewModel"

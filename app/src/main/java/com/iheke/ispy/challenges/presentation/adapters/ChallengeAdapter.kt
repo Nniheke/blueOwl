@@ -1,4 +1,4 @@
-package com.iheke.ispy.challenges.presentation.adapter
+package com.iheke.ispy.challenges.presentation.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
