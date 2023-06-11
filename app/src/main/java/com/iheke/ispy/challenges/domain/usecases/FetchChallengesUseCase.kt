@@ -4,8 +4,8 @@ import android.location.Location
 import android.util.Log
 import com.iheke.ispy.challenges.domain.mappers.toUiModel
 import com.iheke.ispy.challenges.presentation.model.UiModel
-import com.iheke.ispy.utils.MapperUtils
 import com.iheke.ispy.utils.MapperUtils.calculateAverageRating
+import com.iheke.ispy.utils.MapperUtils.calculateDistance
 import com.iheke.ispy.utils.MapperUtils.calculateNumberOfWins
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -39,7 +39,7 @@ class FetchChallengesUseCase @Inject constructor(
                 challenges.map { challengeApiModel ->
                     val userApiModel = users.first { it.id == challengeApiModel.user }
                     val distance = location.let { currentLocation ->
-                        MapperUtils.calculateDistance(
+                        calculateDistance(
                             currentLocation.latitude,
                             currentLocation.longitude,
                             challengeApiModel.location.latitude,
