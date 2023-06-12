@@ -1,15 +1,15 @@
 package com.iheke.ispy.challenges.data.repository.repositories.permission
 
 import com.iheke.ispy.challenges.domain.permission.Permission
-import com.iheke.ispy.challenges.data.permission.PermissionService
+import com.iheke.ispy.challenges.data.repository.datasource.permission.PermissionDataSource
 
 /**
  * PermissionRepositoryImpl is an implementation of the [PermissionRepository] interface
- * that manages permissions using the provided [permissionService].
+ * that manages permissions using the provided [permissionDataSource].
  *
- * @param permissionService The service used for managing permissions.
+ * @param permissionDataSource The service used for managing permissions.
  */
-class PermissionRepositoryImpl(private val permissionService: PermissionService) :
+class PermissionRepositoryImpl(private val permissionDataSource: PermissionDataSource) :
     PermissionRepository {
 
     /**
@@ -18,6 +18,6 @@ class PermissionRepositoryImpl(private val permissionService: PermissionService)
      * @param permissions The set of permissions to request.
      */
     override suspend fun requestPermissions(permissions: Set<Permission>) {
-        permissionService.requestPermissions(permissions)
+        permissionDataSource.requestPermissions(permissions)
     }
 }

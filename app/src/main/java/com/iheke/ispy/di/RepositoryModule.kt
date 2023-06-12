@@ -1,7 +1,7 @@
 package com.iheke.ispy.di
 
 import com.iheke.ispy.challenges.data.api.ISpyService
-import com.iheke.ispy.challenges.data.permission.PermissionService
+import com.iheke.ispy.challenges.data.repository.datasource.permission.PermissionDataSource
 import com.iheke.ispy.challenges.data.repository.repositories.challenge.ChallengeRepository
 import com.iheke.ispy.challenges.data.repository.repositories.challenge.ChallengeRepositoryImpl
 import com.iheke.ispy.challenges.data.repository.datasource.challenge.ChallengesRemoteDataSource
@@ -47,12 +47,12 @@ object RepositoryModule {
     /**
      * Provides an instance of the PermissionRepository.
      *
-     * @param permissionService The PermissionService dependency.
+     * @param permissionDataSource The PermissionService dependency.
      * @return An instance of the PermissionRepository.
      */
     @Provides
-    fun providePermissionRepository(permissionService: PermissionService): PermissionRepository {
-        return PermissionRepositoryImpl(permissionService)
+    fun providePermissionRepository(permissionDataSource: PermissionDataSource): PermissionRepository {
+        return PermissionRepositoryImpl(permissionDataSource)
     }
 
     /**

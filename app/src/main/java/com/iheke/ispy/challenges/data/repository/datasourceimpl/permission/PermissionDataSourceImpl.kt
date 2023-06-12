@@ -1,17 +1,18 @@
-package com.iheke.ispy.challenges.data.permission
+package com.iheke.ispy.challenges.data.repository.datasourceimpl.permission
 
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
+import com.iheke.ispy.challenges.data.repository.datasource.permission.PermissionDataSource
 import com.iheke.ispy.challenges.domain.permission.Permission
 import com.iheke.ispy.challenges.domain.permission.PermissionState
 
 /**
- * PermissionServiceImpl is an implementation of the [PermissionService] interface
+ * PermissionServiceImpl is an implementation of the [PermissionDataSource] interface
  * that handles permission management using the Android framework APIs.
  */
-class PermissionServiceImpl : PermissionService {
+class PermissionDataSourceImpl : PermissionDataSource {
 
     private val permissionsToRequest = mutableSetOf<Permission>()
 

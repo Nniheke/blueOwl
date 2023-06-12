@@ -7,8 +7,8 @@ import com.google.android.gms.location.LocationServices
 import com.google.gson.*
 import com.iheke.ispy.BuildConfig
 import com.iheke.ispy.challenges.data.api.ISpyService
-import com.iheke.ispy.challenges.data.permission.PermissionService
-import com.iheke.ispy.challenges.data.permission.PermissionServiceImpl
+import com.iheke.ispy.challenges.data.repository.datasource.permission.PermissionDataSource
+import com.iheke.ispy.challenges.data.repository.datasourceimpl.permission.PermissionDataSourceImpl
 import com.iheke.ispy.challenges.data.location.LocationProvider
 import dagger.Module
 import dagger.Provides
@@ -44,8 +44,8 @@ object AppModule {
      * @return An instance of the PermissionService.
      */
     @Provides
-    fun providePermissionService(): PermissionService {
-        return PermissionServiceImpl()
+    fun providePermissionService(): PermissionDataSource {
+        return PermissionDataSourceImpl()
     }
 
     /**

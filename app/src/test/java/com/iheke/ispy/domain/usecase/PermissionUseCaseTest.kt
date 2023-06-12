@@ -1,6 +1,6 @@
 package com.iheke.ispy.domain.usecase
 
-import com.iheke.ispy.challenges.data.permission.PermissionService
+import com.iheke.ispy.challenges.data.repository.datasource.permission.PermissionDataSource
 import com.iheke.ispy.challenges.data.repository.repositories.permission.PermissionRepository
 import com.iheke.ispy.challenges.domain.permission.Permission
 import com.iheke.ispy.challenges.domain.permission.PermissionState
@@ -16,7 +16,7 @@ class PermissionUseCaseTest {
 
     private lateinit var useCase: PermissionUseCase
     private lateinit var mockRepository: PermissionRepository
-    private lateinit var mockService: PermissionService
+    private lateinit var mockService: PermissionDataSource
 
 
     @Before

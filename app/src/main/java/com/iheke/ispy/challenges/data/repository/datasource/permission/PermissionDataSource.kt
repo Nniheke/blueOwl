@@ -1,12 +1,11 @@
-package com.iheke.ispy.challenges.data.permission
+package com.iheke.ispy.challenges.data.repository.datasource.permission
 
 import com.iheke.ispy.challenges.domain.permission.Permission
-import kotlinx.coroutines.flow.Flow
 
 /**
  * The PermissionService interface defines the contract for managing permissions.
  */
-interface PermissionService {
+interface PermissionDataSource {
 
     /**
      * Requests the specified permissions.

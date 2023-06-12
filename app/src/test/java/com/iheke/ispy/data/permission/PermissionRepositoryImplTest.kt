@@ -1,6 +1,6 @@
 package com.iheke.ispy.data.permission
 
-import com.iheke.ispy.challenges.data.permission.PermissionService
+import com.iheke.ispy.challenges.data.repository.datasource.permission.PermissionDataSource
 import com.iheke.ispy.challenges.data.repository.repositories.permission.PermissionRepository
 import com.iheke.ispy.challenges.data.repository.repositories.permission.PermissionRepositoryImpl
 import com.iheke.ispy.challenges.domain.permission.Permission
@@ -17,7 +17,7 @@ import org.junit.Test
 class PermissionRepositoryImplTest {
 
     private lateinit var permissionRepository: PermissionRepository
-    private lateinit var mockService: PermissionService
+    private lateinit var mockService: PermissionDataSource
 
     @get:Rule
     val coroutineRule = CoroutineTestRule()
