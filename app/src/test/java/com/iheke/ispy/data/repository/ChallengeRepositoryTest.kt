@@ -1,7 +1,7 @@
 package com.iheke.ispy.data.repository
 
 import android.location.Location
-import com.iheke.ispy.challenges.data.repository.repositories.ChallengeRepository
+import com.iheke.ispy.challenges.data.repository.repositories.challenge.ChallengeRepository
 import com.iheke.ispy.data.challenge.uiModels
 import io.mockk.coEvery
 import io.mockk.coVerify

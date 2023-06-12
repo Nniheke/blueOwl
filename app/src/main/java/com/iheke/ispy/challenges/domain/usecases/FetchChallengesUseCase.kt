@@ -1,7 +1,7 @@
 package com.iheke.ispy.challenges.domain.usecases
 
 import android.location.Location
-import com.iheke.ispy.challenges.data.repository.repositories.ChallengeRepository
+import com.iheke.ispy.challenges.data.repository.repositories.challenge.ChallengeRepository
 import com.iheke.ispy.challenges.presentation.model.UiModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject

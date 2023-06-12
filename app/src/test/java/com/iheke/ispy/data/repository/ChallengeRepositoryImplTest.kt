@@ -1,7 +1,7 @@
 package com.iheke.ispy.data.repository
 
 import android.location.Location
-import com.iheke.ispy.challenges.data.repository.repositories.ChallengeRepositoryImpl
+import com.iheke.ispy.challenges.data.repository.repositories.challenge.ChallengeRepositoryImpl
 import com.iheke.ispy.challenges.data.repository.datasource.challenge.ChallengesRemoteDataSource
 import com.iheke.ispy.data.challenge.challengesApiModels
 import com.iheke.ispy.data.challenge.uiModels

@@ -1,6 +1,6 @@
 package com.iheke.ispy.challenges.domain.usecases
 
-import com.iheke.ispy.challenges.data.repository.permissions.PermissionRepository
+import com.iheke.ispy.challenges.data.repository.repositories.permission.PermissionRepository
 import com.iheke.ispy.challenges.domain.permission.Permission
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package com.iheke.ispy.challenges.data.repository.repositories
+package com.iheke.ispy.challenges.data.repository.repositories.challenge
 
 import android.location.Location
 import android.util.Log

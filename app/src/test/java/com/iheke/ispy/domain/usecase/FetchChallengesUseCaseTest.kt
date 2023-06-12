@@ -2,7 +2,7 @@ package com.iheke.ispy.domain.usecase
 
 import android.location.Location
 import com.iheke.ispy.challenges.data.mappers.toUiModel
-import com.iheke.ispy.challenges.data.repository.repositories.ChallengeRepository
+import com.iheke.ispy.challenges.data.repository.repositories.challenge.ChallengeRepository
 import com.iheke.ispy.challenges.domain.usecases.FetchChallengesUseCase
 import com.iheke.ispy.challenges.presentation.model.UiModel
 import com.iheke.ispy.data.challenge.challengesApiModels

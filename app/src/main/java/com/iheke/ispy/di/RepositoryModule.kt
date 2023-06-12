@@ -2,12 +2,12 @@ package com.iheke.ispy.di
 
 import com.iheke.ispy.challenges.data.api.ISpyService
 import com.iheke.ispy.challenges.data.permission.PermissionService
-import com.iheke.ispy.challenges.data.repository.repositories.ChallengeRepository
-import com.iheke.ispy.challenges.data.repository.repositories.ChallengeRepositoryImpl
+import com.iheke.ispy.challenges.data.repository.repositories.challenge.ChallengeRepository
+import com.iheke.ispy.challenges.data.repository.repositories.challenge.ChallengeRepositoryImpl
 import com.iheke.ispy.challenges.data.repository.datasource.challenge.ChallengesRemoteDataSource
 import com.iheke.ispy.challenges.data.repository.datasourceimpl.challenge.ChallengesRemoteDataSourceImpl
-import com.iheke.ispy.challenges.data.repository.permissions.PermissionRepository
-import com.iheke.ispy.challenges.data.repository.permissions.PermissionRepositoryImpl
+import com.iheke.ispy.challenges.data.repository.repositories.permission.PermissionRepository
+import com.iheke.ispy.challenges.data.repository.repositories.permission.PermissionRepositoryImpl
 import com.iheke.ispy.challenges.data.repository.datasource.user.UsersRemoteDataSource
 import com.iheke.ispy.challenges.data.repository.datasourceimpl.user.UsersRemoteDataSourceImpl
 import dagger.Module

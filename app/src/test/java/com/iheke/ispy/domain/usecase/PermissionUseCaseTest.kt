@@ -1,7 +1,7 @@
 package com.iheke.ispy.domain.usecase
 
 import com.iheke.ispy.challenges.data.permission.PermissionService
-import com.iheke.ispy.challenges.data.repository.permissions.PermissionRepository
+import com.iheke.ispy.challenges.data.repository.repositories.permission.PermissionRepository
 import com.iheke.ispy.challenges.domain.permission.Permission
 import com.iheke.ispy.challenges.domain.permission.PermissionState
 import com.iheke.ispy.challenges.domain.usecases.PermissionUseCase
