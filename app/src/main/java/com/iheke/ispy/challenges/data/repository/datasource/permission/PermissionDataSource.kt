@@ -3,7 +3,7 @@ package com.iheke.ispy.challenges.data.repository.datasource.permission
 import com.iheke.ispy.challenges.domain.permission.Permission
 
 /**
- * The PermissionService interface defines the contract for managing permissions.
+ * The PermissionDataSource interface defines the contract for managing permissions.
  */
 interface PermissionDataSource {
 

@@ -9,7 +9,7 @@ import com.iheke.ispy.challenges.domain.permission.Permission
 import com.iheke.ispy.challenges.domain.permission.PermissionState
 
 /**
- * PermissionServiceImpl is an implementation of the [PermissionDataSource] interface
+ * PermissionDataSourceImpl is an implementation of the [PermissionDataSource] interface
  * that handles permission management using the Android framework APIs.
  */
 class PermissionDataSourceImpl : PermissionDataSource {

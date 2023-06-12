@@ -38,13 +38,13 @@ object AppModule {
     }
 
     /**
-     * Provides an instance of the PermissionService.
+     * Provides an instance of the PermissionDataSource.
      *
      * @param app The application instance.
-     * @return An instance of the PermissionService.
+     * @return An instance of the PermissionDataSource.
      */
     @Provides
-    fun providePermissionService(): PermissionDataSource {
+    fun providePermissionDataSource(): PermissionDataSource {
         return PermissionDataSourceImpl()
     }
 
