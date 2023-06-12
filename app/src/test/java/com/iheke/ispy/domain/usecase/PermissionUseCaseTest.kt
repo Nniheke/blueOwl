@@ -16,12 +16,12 @@ class PermissionUseCaseTest {
 
     private lateinit var useCase: PermissionUseCase
     private lateinit var mockRepository: PermissionRepository
-    private lateinit var mockService: PermissionDataSource
+    private lateinit var mockDataSource: PermissionDataSource
 
 
     @Before
     fun setup() {
-        mockService = mockk()
+        mockDataSource = mockk()
         mockRepository = mockk()
         useCase = PermissionUseCase(mockRepository)
     }

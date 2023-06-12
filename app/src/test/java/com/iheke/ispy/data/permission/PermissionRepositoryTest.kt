@@ -16,15 +16,15 @@ import org.junit.Test
 class PermissionRepositoryTest {
 
     private lateinit var permissionRepository: PermissionRepository
-    private lateinit var mockService: PermissionDataSource
+    private lateinit var mockDataSource: PermissionDataSource
 
     @get:Rule
     val coroutineRule = CoroutineTestRule()
 
     @Before
     fun setup() {
-        mockService = mockk()
-        permissionRepository = PermissionRepositoryImpl(mockService)
+        mockDataSource = mockk()
+        permissionRepository = PermissionRepositoryImpl(mockDataSource)
     }
 
     @Test
@@ -39,13 +39,13 @@ class PermissionRepositoryTest {
         )
 
         // Mock the behavior of requestPermissions function
-        coEvery { mockService.requestPermissions(any()) } just Runs
+        coEvery { mockDataSource.requestPermissions(any()) } just Runs
 
         // Act
         permissionRepository.requestPermissions(permissionsToRequest)
 
         // Assert
-        coVerify { mockService.requestPermissions(permissionsToRequest) }
+        coVerify { mockDataSource.requestPermissions(permissionsToRequest) }
     }
 
 }

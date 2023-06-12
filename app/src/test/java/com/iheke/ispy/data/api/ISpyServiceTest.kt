@@ -1,4 +1,4 @@
-package com.iheke.ispy.api
+package com.iheke.ispy.data.api
 
 import com.iheke.ispy.challenges.data.api.ISpyService
 import com.iheke.ispy.challenges.data.models.ChallengeLocation
