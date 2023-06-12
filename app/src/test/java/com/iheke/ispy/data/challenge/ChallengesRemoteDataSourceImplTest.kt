@@ -1,7 +1,7 @@
 package com.iheke.ispy.data.challenge
 
 import com.iheke.ispy.challenges.data.api.ISpyService
-import com.iheke.ispy.challenges.data.repositories.challenges.datasourceimpl.ChallengesRemoteDataSourceImpl
+import com.iheke.ispy.challenges.data.repository.datasourceimpl.challenge.ChallengesRemoteDataSourceImpl
 import io.mockk.coEvery
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals

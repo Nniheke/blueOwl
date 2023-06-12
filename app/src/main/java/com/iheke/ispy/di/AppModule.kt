@@ -8,7 +8,7 @@ import com.google.gson.*
 import com.iheke.ispy.BuildConfig
 import com.iheke.ispy.challenges.data.api.ISpyService
 import com.iheke.ispy.challenges.data.permission.PermissionService
-import com.iheke.ispy.challenges.data.repositories.permissions.PermissionServiceImpl
+import com.iheke.ispy.challenges.data.repository.permissions.PermissionServiceImpl
 import com.iheke.ispy.challenges.data.location.LocationProvider
 import dagger.Module
 import dagger.Provides

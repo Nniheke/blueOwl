@@ -1,4 +1,4 @@
-package com.iheke.ispy.challenges.data.repositories.challenges.datasource
+package com.iheke.ispy.challenges.data.repository.datasource.challenge
 
 import com.iheke.ispy.challenges.data.models.ChallengesApiModel
 import kotlinx.coroutines.flow.Flow

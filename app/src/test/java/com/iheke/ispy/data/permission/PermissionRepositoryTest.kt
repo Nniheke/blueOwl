@@ -1,8 +1,8 @@
 package com.iheke.ispy.data.permission
 
 import com.iheke.ispy.challenges.data.permission.PermissionService
-import com.iheke.ispy.challenges.data.repositories.permissions.PermissionRepository
-import com.iheke.ispy.challenges.data.repositories.permissions.PermissionRepositoryImpl
+import com.iheke.ispy.challenges.data.repository.permissions.PermissionRepository
+import com.iheke.ispy.challenges.data.repository.permissions.PermissionRepositoryImpl
 import com.iheke.ispy.challenges.domain.permission.Permission
 import com.iheke.ispy.challenges.domain.permission.PermissionState
 import io.mockk.*

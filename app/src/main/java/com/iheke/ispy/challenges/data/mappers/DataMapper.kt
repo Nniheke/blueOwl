@@ -1,4 +1,4 @@
-package com.iheke.ispy.challenges.domain.mappers
+package com.iheke.ispy.challenges.data.mappers
 
 import com.iheke.ispy.challenges.data.models.ChallengesApiModel
 import com.iheke.ispy.challenges.data.models.UserApiModel
@@ -6,8 +6,6 @@ import com.iheke.ispy.challenges.presentation.model.ChallengeUiModel
 import com.iheke.ispy.challenges.presentation.model.ChallengesUiModel
 import com.iheke.ispy.challenges.presentation.model.UiModel
 import com.iheke.ispy.challenges.presentation.model.UserUiModel
-import com.iheke.ispy.utils.MapperUtils.calculateAverageRating
-import com.iheke.ispy.utils.MapperUtils.calculateNumberOfWins
 
 /**
  * Converts the ChallengesApiModel to its corresponding UiModel representation.

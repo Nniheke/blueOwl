@@ -5,7 +5,7 @@ import android.location.Location
 import androidx.annotation.OpenForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.iheke.ispy.challenges.domain.mappers.toUiModel
+import com.iheke.ispy.challenges.data.mappers.toUiModel
 import com.iheke.ispy.challenges.domain.permission.Permission
 import com.iheke.ispy.challenges.domain.usecases.FetchChallengesUseCase
 import com.iheke.ispy.challenges.domain.usecases.GetLocationUseCase

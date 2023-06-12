@@ -1,7 +1,7 @@
 package com.iheke.ispy.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.iheke.ispy.challenges.domain.mappers.toUiModel
+import com.iheke.ispy.challenges.data.mappers.toUiModel
 import com.iheke.ispy.challenges.domain.permission.Permission
 import com.iheke.ispy.challenges.domain.permission.PermissionState
 import com.iheke.ispy.challenges.domain.usecases.FetchChallengesUseCase

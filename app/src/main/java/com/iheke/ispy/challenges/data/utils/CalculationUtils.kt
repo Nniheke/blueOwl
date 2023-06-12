@@ -1,4 +1,4 @@
-package com.iheke.ispy.utils
+package com.iheke.ispy.challenges.data.utils
 
 import com.iheke.ispy.challenges.data.models.Match
 import com.iheke.ispy.challenges.data.models.Rating
@@ -7,7 +7,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-object MapperUtils {
+object CalculationUtils {
     /**
      * Calculates the distance between two sets of latitude and longitude coordinates using the Haversine formula.
      *

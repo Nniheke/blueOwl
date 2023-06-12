@@ -1,8 +1,8 @@
-package com.iheke.ispy.challenges.data.repositories.challenges.datasourceimpl
+package com.iheke.ispy.challenges.data.repository.datasourceimpl.challenge
 
 import com.iheke.ispy.challenges.data.api.ISpyService
 import com.iheke.ispy.challenges.data.models.ChallengesApiModel
-import com.iheke.ispy.challenges.data.repositories.challenges.datasource.ChallengesRemoteDataSource
+import com.iheke.ispy.challenges.data.repository.datasource.challenge.ChallengesRemoteDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject

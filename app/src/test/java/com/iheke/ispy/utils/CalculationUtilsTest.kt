@@ -3,10 +3,11 @@ package com.iheke.ispy.utils
 import com.iheke.ispy.challenges.data.models.ChallengeLocation
 import com.iheke.ispy.challenges.data.models.Match
 import com.iheke.ispy.challenges.data.models.Rating
+import com.iheke.ispy.challenges.data.utils.CalculationUtils
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class MapperUtilsTest {
+class CalculationUtilsTest {
 
     @Test
     fun calculateDistance_shouldReturnCorrectDistance() {
@@ -20,7 +21,7 @@ class MapperUtilsTest {
         val expectedDistance = 3935746.254609722
 
         // Calculate the distance
-        val distance = MapperUtils.calculateDistance(currentLat, currentLong, challengeLat, challengeLong)
+        val distance = CalculationUtils.calculateDistance(currentLat, currentLong, challengeLat, challengeLong)
 
         // Assert the result
         assertEquals(expectedDistance, distance, 0.01)
@@ -43,7 +44,7 @@ class MapperUtilsTest {
         val expectedWins = 3
 
         // Calculate the number of wins
-        val wins = MapperUtils.calculateNumberOfWins(matches)
+        val wins = CalculationUtils.calculateNumberOfWins(matches)
 
         // Assert the result
         assertEquals(expectedWins, wins)
@@ -64,7 +65,7 @@ class MapperUtilsTest {
         val expectedAverageRating = 3.0
 
         // Calculate the average rating
-        val averageRating = MapperUtils.calculateAverageRating(ratings)
+        val averageRating = CalculationUtils.calculateAverageRating(ratings)
 
         // Assert the result
         assertEquals(expectedAverageRating, averageRating, 0.01)

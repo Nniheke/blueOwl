@@ -1,4 +1,4 @@
-package com.iheke.ispy.challenges.data.repositories.permissions
+package com.iheke.ispy.challenges.data.repository.permissions
 
 import com.iheke.ispy.challenges.domain.permission.Permission
 import com.iheke.ispy.challenges.data.permission.PermissionService

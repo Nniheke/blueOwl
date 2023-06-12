@@ -1,4 +1,4 @@
-package com.iheke.ispy.challenges.data.repositories.permissions
+package com.iheke.ispy.challenges.data.repository.permissions
 
 import android.annotation.SuppressLint
 import android.app.Activity

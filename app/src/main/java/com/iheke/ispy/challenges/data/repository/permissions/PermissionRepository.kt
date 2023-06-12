@@ -1,7 +1,6 @@
-package com.iheke.ispy.challenges.data.repositories.permissions
+package com.iheke.ispy.challenges.data.repository.permissions
 
 import com.iheke.ispy.challenges.domain.permission.Permission
-import kotlinx.coroutines.flow.Flow
 
 /**
  * PermissionRepository is an interface defining the contract for managing permissions.
