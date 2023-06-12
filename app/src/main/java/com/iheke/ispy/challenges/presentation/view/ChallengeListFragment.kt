@@ -37,7 +37,6 @@ class ChallengeListFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_challenge_list, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.challengesViewState = ChallengesViewState()
         binding.recyclerViewChallenges.layoutManager = LinearLayoutManager(requireContext())
         return binding.root
     }
