@@ -83,17 +83,17 @@ class ChallengeViewModelTest {
     @Test
     fun `updateViewStateOnChallengesLoaded should update viewState with provided challengeUiModels`() {
         // Arrange
-        val articles = listOf(
+        val uiModels = listOf(
             UiModel(UserUiModel(""), challengesApiModels.first().toUiModel(), 10.0),
             UiModel(UserUiModel(""), challengesApiModels.first().toUiModel(), 5.0)
         )
 
         // Act
-        viewModel.updateViewStateOnChallengesLoaded(articles)
+        viewModel.updateViewStateOnChallengesLoaded(uiModels.map { it.toUiModel() })
 
         // Assert
         val updatedViewState = viewModel.viewState.value
-        assertEquals(articles.first().toUiModel(), updatedViewState.challengeUiModel.first())
+        assertEquals(uiModels.first().toUiModel(), updatedViewState.challengeUiModel.first())
         assertEquals(false, updatedViewState.isLoading)
     }
 

@@ -1,11 +1,11 @@
 package com.iheke.ispy.data.repository
 
 import android.location.Location
-import com.iheke.ispy.challenges.data.repository.repositories.challenge.ChallengeRepositoryImpl
 import com.iheke.ispy.challenges.data.repository.datasource.challenge.ChallengesRemoteDataSource
-import com.iheke.ispy.data.challenge.challengesApiModels
-import com.iheke.ispy.data.challenge.uiModels
 import com.iheke.ispy.challenges.data.repository.datasource.user.UsersRemoteDataSource
+import com.iheke.ispy.challenges.data.repository.repositories.challenge.ChallengeRepositoryImpl
+import com.iheke.ispy.data.challenge.challengesApiModels
+import com.iheke.ispy.data.models.challengesUiModels
 import com.iheke.ispy.data.user.usersApiModels
 import com.iheke.ispy.utils.FlowTestUtil
 import io.mockk.coEvery
@@ -49,7 +49,7 @@ class ChallengeRepositoryImplTest {
         val result = FlowTestUtil.collectData(flow)
 
         // Verify that the result matches the expected mapped data
-        val expectedUiModels = uiModels
+        val expectedUiModels = challengesUiModels
         assertEquals(expectedUiModels, result[0])
 
         // Verify that the remote data sources were called

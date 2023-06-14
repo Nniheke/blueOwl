@@ -1,11 +1,10 @@
 package com.iheke.ispy.domain.usecase
 
 import android.location.Location
-import com.iheke.ispy.challenges.data.mappers.toUiModel
 import com.iheke.ispy.challenges.data.repository.repositories.challenge.ChallengeRepository
 import com.iheke.ispy.challenges.domain.usecases.FetchChallengesUseCase
-import com.iheke.ispy.challenges.presentation.model.UiModel
 import com.iheke.ispy.data.challenge.challengesApiModels
+import com.iheke.ispy.data.models.challengesUiModels
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -38,10 +37,7 @@ class FetchChallengesUseCaseTest {
         every { location.latitude } returns 0.0
         every { location.longitude } returns 0.0
 
-        val expectedUiModels = listOf(
-            UiModel(userApiModels[0].toUiModel(), challengesApiModels[0].toUiModel().copy(wins = 1, rating = 3.0), distance=867808.5613727542),
-            UiModel(userApiModels[1].toUiModel(), challengesApiModels[1].toUiModel().copy(wins = 1, rating = 4.0), distance=867808.5613727542)
-        )
+        val expectedUiModels = challengesUiModels
 
         // Stub the repository's behavior
         coEvery { challengeRepository.fetchData(location) } returns flowOf(expectedUiModels)

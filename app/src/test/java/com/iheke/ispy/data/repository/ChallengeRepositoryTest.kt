@@ -2,7 +2,7 @@ package com.iheke.ispy.data.repository
 
 import android.location.Location
 import com.iheke.ispy.challenges.data.repository.repositories.challenge.ChallengeRepository
-import com.iheke.ispy.data.challenge.uiModels
+import com.iheke.ispy.data.models.challengesUiModels
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -26,7 +26,7 @@ class ChallengeRepositoryTest {
     fun `fetchData should return flow of UI models`() = runBlockingTest {
         // Mocked data
         val location: Location = mockk()
-        val expectedUiModels = uiModels
+        val expectedUiModels = challengesUiModels
 
         // Stub the fetchData function's behavior
         coEvery { challengeRepository.fetchData(location) } returns flowOf(expectedUiModels)

@@ -7,6 +7,7 @@ import com.iheke.ispy.challenges.data.repository.datasource.challenge.Challenges
 import com.iheke.ispy.challenges.data.utils.CalculationUtils
 import com.iheke.ispy.challenges.presentation.model.UiModel
 import com.iheke.ispy.challenges.data.repository.datasource.user.UsersRemoteDataSource
+import com.iheke.ispy.challenges.presentation.model.ChallengeUiModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.zip
 import javax.inject.Inject
@@ -30,7 +31,7 @@ class ChallengeRepositoryImpl @Inject constructor(
      * @throws Exception if an error occurs during the data fetching process.
      */
     @Throws(Exception::class)
-    override suspend fun fetchData(location: Location): Flow<List<UiModel>> {
+    override suspend fun fetchData(location: Location): Flow<List<ChallengeUiModel>> {
         try {
             // Fetch challenges and users data
             val challengesApiModels = challengesRemoteDataSource.getChallenges()
@@ -59,7 +60,7 @@ class ChallengeRepositoryImpl @Inject constructor(
                         distance = distance
                     )
 
-                    uiModel
+                    uiModel.toUiModel()
                 }.sortedBy { it.distance }
             }
 

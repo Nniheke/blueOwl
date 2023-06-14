@@ -5,13 +5,12 @@ import android.location.Location
 import androidx.annotation.OpenForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.iheke.ispy.challenges.data.mappers.toUiModel
 import com.iheke.ispy.challenges.domain.permission.Permission
 import com.iheke.ispy.challenges.domain.usecases.FetchChallengesUseCase
 import com.iheke.ispy.challenges.domain.usecases.GetLocationUseCase
 import com.iheke.ispy.challenges.domain.usecases.PermissionUseCase
 import com.iheke.ispy.challenges.presentation.event.Event
-import com.iheke.ispy.challenges.presentation.model.UiModel
+import com.iheke.ispy.challenges.presentation.model.ChallengeUiModel
 import com.iheke.ispy.challenges.presentation.state.ChallengesViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -76,22 +75,23 @@ class ChallengeViewModel @Inject constructor(
      */
     private fun fetchChallenges(location: Location) {
         viewModelScope.launch {
-            val uiModels = fetchChallengesUseCase.execute(location).first()
-            updateViewStateOnChallengesLoaded(uiModels)
+            fetchChallengesUseCase.execute(location).collect{
+                updateViewStateOnChallengesLoaded(it)
+            }
         }
     }
 
     /**
      * Updates the view state when challenges are loaded.
      *
-     * @param uiModel The list of challenge UI models.
+     * @param challengeUiModelList The list of challenge UI models.
      */
     @OpenForTesting
     fun updateViewStateOnChallengesLoaded(
-        uiModel: List<UiModel>
+        challengeUiModelList: List<ChallengeUiModel>
     ) {
         _viewState.value = _viewState.value.copy(
-            challengeUiModel = uiModel.map { it.toUiModel() },
+            challengeUiModel = challengeUiModelList.map {it},
             isLoading = false
         )
     }
