@@ -11,11 +11,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.iheke.ispy.R
-import com.iheke.ispy.challenges.presentation.viewmodel.ChallengeViewModel
-import com.iheke.ispy.challenges.presentation.state.ChallengesViewState
-import com.iheke.ispy.challenges.presentation.event.Event
 import com.iheke.ispy.challenges.presentation.adapters.ChallengeAdapter
+import com.iheke.ispy.challenges.presentation.event.Event
 import com.iheke.ispy.challenges.presentation.model.ChallengeUiModel
+import com.iheke.ispy.challenges.presentation.viewmodel.ChallengeViewModel
 import com.iheke.ispy.databinding.FragmentChallengeListBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
