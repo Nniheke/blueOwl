@@ -22,6 +22,7 @@ import javax.inject.Inject
  * @property fetchChallengesUseCase The use case for retrieving challenges.
  * @property permissionUseCase The use case for handling permissions.
  * @property getLocationUseCase The use case for retrieving the user's location.
+ * @param savedStateHandle The saved state handle used to store and retrieve data across configuration changes.
  */
 @HiltViewModel
 class ChallengeViewModel @Inject constructor(
@@ -35,13 +36,17 @@ class ChallengeViewModel @Inject constructor(
     private val imageUrlKey = "image"
     private val titleKey = "title"
 
+    /**
+     * LiveData representing the image URL. Observers will be notified of changes in the saved state.
+     */
     val imageUrlLiveData: LiveData<String> = savedStateHandle.getLiveData(imageUrlKey)
+
+    /**
+     * LiveData representing the title. Observers will be notified of changes in the saved state.
+     */
     val titleLiveData: LiveData<String> = savedStateHandle.getLiveData(titleKey)
 
-    fun setArguments(imageUrl: String, title: String) {
-        savedStateHandle[imageUrlKey] = imageUrl
-        savedStateHandle[titleKey] = title
-    }
+
     /**
      * The current view state of challenges.
      */
@@ -88,6 +93,18 @@ class ChallengeViewModel @Inject constructor(
             }
         }
     }
+
+    /**
+     * Sets the image URL and title in the saved state.
+     *
+     * @param imageUrl The new image URL to be saved.
+     * @param title The new title to be saved.
+     */
+    fun setArguments(imageUrl: String, title: String) {
+        savedStateHandle[imageUrlKey] = imageUrl
+        savedStateHandle[titleKey] = title
+    }
+
 
     /**
      * Updates the view state when challenges are loaded.

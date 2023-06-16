@@ -34,8 +34,8 @@ class ChallengeImageFragment : Fragment() {
     ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_challenge_image, container, false)
-        val imageUrl = arguments?.getString(IMAGE) ?: viewModel.imageUrlLiveData.value.toString()
-        val hint = arguments?.getString(TITLE) ?: viewModel.titleLiveData.value.toString()
+        val imageUrl = arguments?.getString(IMAGE) ?: viewModel.imageUrlLiveData.value
+        val hint = arguments?.getString(TITLE) ?: viewModel.titleLiveData.value
         binding.title = hint
         binding.imageView.load(imageUrl) {
             diskCachePolicy(CachePolicy.ENABLED)
