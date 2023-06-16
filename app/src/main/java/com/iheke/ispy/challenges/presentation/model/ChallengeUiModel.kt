@@ -13,6 +13,8 @@ package com.iheke.ispy.challenges.presentation.model
 data class ChallengeUiModel(
     val wins: Int,
     val rating: Double,
+    val latitude: Double,
+    val longitude: Double,
     val distance: Double,
     val hint: String,
     val creator: String,

@@ -1,6 +1,7 @@
 package com.iheke.ispy.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.SavedStateHandle
 import com.iheke.ispy.challenges.data.mappers.toUiModel
 import com.iheke.ispy.challenges.domain.permission.Permission
 import com.iheke.ispy.challenges.domain.permission.PermissionState
@@ -38,6 +39,7 @@ class ChallengeViewModelTest {
     private lateinit var permissionUseCase: PermissionUseCase
     private lateinit var getLocationUseCase: GetLocationUseCase
     private lateinit var viewModel: ChallengeViewModel
+    private lateinit var savedStateHandler : SavedStateHandle
 
     @Before
     fun setup() {
@@ -48,7 +50,8 @@ class ChallengeViewModelTest {
         viewModel = ChallengeViewModel(
             fetchChallengesUseCase,
             permissionUseCase,
-            getLocationUseCase
+            getLocationUseCase,
+            savedStateHandler
         )
     }
 

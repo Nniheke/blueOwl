@@ -14,7 +14,7 @@
             android:layout_height="match_parent"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="@{() -> viewModel.onChallengeClicked(challenge.image, challenge.hint)}"
+            android:onClick="@{() -> challengeClickListener.onClick(challenge.image, challenge.hint)}"
             android:padding="@dimen/constraint_layout_padding">
 
             <!-- Number of wins -->
@@ -76,14 +76,12 @@
     </androidx.cardview.widget.CardView>
 
     <data>
-
         <import type="android.view.View" />
-
         <import type="com.iheke.ispy.challenges.presentation.adapters.PluralsBindingAdapter" />
 
         <variable
-            name="viewModel"
-            type="com.iheke.ispy.challenges.presentation.viewmodel.ChallengeViewModel" />
+            name="challengeClickListener"
+            type="com.iheke.ispy.challenges.presentation.view.ChallengeClickListener" />
 
         <variable
             name="challenge"

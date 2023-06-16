@@ -3,8 +3,8 @@ package com.iheke.ispy.challenges.presentation.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.iheke.ispy.challenges.presentation.viewmodel.ChallengeViewModel
 import com.iheke.ispy.challenges.presentation.model.ChallengeUiModel
+import com.iheke.ispy.challenges.presentation.view.ChallengeClickListener
 import com.iheke.ispy.databinding.ChallengeCardBinding
 
 /**
@@ -15,7 +15,7 @@ import com.iheke.ispy.databinding.ChallengeCardBinding
  */
 class ChallengeAdapter(
     private val challenges: List<ChallengeUiModel>,
-    private val viewModel: ChallengeViewModel
+    private val challengeClickListener: ChallengeClickListener
 ) : RecyclerView.Adapter<ChallengeAdapter.ChallengeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChallengeViewHolder {
@@ -26,7 +26,7 @@ class ChallengeAdapter(
 
     override fun onBindViewHolder(holder: ChallengeViewHolder, position: Int) {
         val challenge = challenges[position]
-        holder.bind(challenge, viewModel)
+        holder.bind(challenge, challengeClickListener)
     }
 
     override fun getItemCount(): Int {
@@ -47,8 +47,8 @@ class ChallengeAdapter(
          * @param challenge The ChallengeUiModel item to be bound.
          * @param viewModel The ChallengeViewModel instance associated with the ViewHolder.
          */
-        fun bind(challenge: ChallengeUiModel, viewModel: ChallengeViewModel) {
-            binding.viewModel = viewModel
+        fun bind(challenge: ChallengeUiModel, challengeClickListener: ChallengeClickListener) {
+            binding.challengeClickListener = challengeClickListener
             binding.challenge = challenge
             binding.executePendingBindings()
         }

@@ -4,12 +4,14 @@ import android.Manifest
 import android.location.Location
 import androidx.annotation.OpenForTesting
 import androidx.lifecycle.*
+import com.iheke.ispy.challenges.data.mappers.toUiModel
+import com.iheke.ispy.challenges.data.utils.CalculationUtils
 import com.iheke.ispy.challenges.domain.permission.Permission
 import com.iheke.ispy.challenges.domain.usecases.FetchChallengesUseCase
 import com.iheke.ispy.challenges.domain.usecases.GetLocationUseCase
 import com.iheke.ispy.challenges.domain.usecases.PermissionUseCase
 import com.iheke.ispy.challenges.presentation.event.Event
-import com.iheke.ispy.challenges.presentation.model.ChallengeUiModel
+import com.iheke.ispy.challenges.presentation.model.UiModel
 import com.iheke.ispy.challenges.presentation.state.ChallengesViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -88,8 +90,8 @@ class ChallengeViewModel @Inject constructor(
      */
     private fun fetchChallenges(location: Location) {
         viewModelScope.launch {
-            fetchChallengesUseCase.execute(location).collect{
-                updateViewStateOnChallengesLoaded(it)
+            fetchChallengesUseCase.execute().collect{
+                updateViewStateOnChallengesLoaded(it, location)
             }
         }
     }
@@ -113,14 +115,23 @@ class ChallengeViewModel @Inject constructor(
      */
     @OpenForTesting
     fun updateViewStateOnChallengesLoaded(
-        challengeUiModelList: List<ChallengeUiModel>
+        challengeUiModelList: List<UiModel>,
+        location: Location
     ) {
         _viewState.update { challengesViewState ->
             challengesViewState.copy(
-                challengeUiModel = challengeUiModelList.map {it},
+                challengeUiModel = challengeUiModelList.map { uiModel ->
+                    uiModel.copy(
+                        distance = getDistance(location, uiModel)
+                    ).toUiModel().copy(distance = getDistance(location, uiModel))
+                }.sortedBy { it.distance },
                 isLoading = false
             )
         }
+    }
+
+    private fun getDistance(location: Location, ui: UiModel) : Double{
+        return  CalculationUtils.calculateDistance(location.latitude, location.longitude, ui.latitude, ui.longitude)
     }
 
     /**

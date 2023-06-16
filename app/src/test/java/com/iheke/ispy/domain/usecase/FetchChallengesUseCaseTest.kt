@@ -31,8 +31,6 @@ class FetchChallengesUseCaseTest {
     fun `execute should return combined and sorted UI models`() = runBlockingTest {
         // Mocked data
         val location: Location = mockk()
-        val challengesApiModels = challengesApiModels
-        val userApiModels = com.iheke.ispy.data.user.usersApiModels
 
         every { location.latitude } returns 0.0
         every { location.longitude } returns 0.0

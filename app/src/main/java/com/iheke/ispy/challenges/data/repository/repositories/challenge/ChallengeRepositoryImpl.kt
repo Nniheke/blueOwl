@@ -31,7 +31,7 @@ class ChallengeRepositoryImpl @Inject constructor(
      * @throws Exception if an error occurs during the data fetching process.
      */
     @Throws(Exception::class)
-    override suspend fun fetchData(location: Location): Flow<List<ChallengeUiModel>> {
+    override suspend fun fetchData(): Flow<List<UiModel>> {
         try {
             // Fetch challenges and users data
             val challengesApiModels = challengesRemoteDataSource.getChallenges()
@@ -42,14 +42,6 @@ class ChallengeRepositoryImpl @Inject constructor(
                 // Map challenges and users data to UI models
                 challenges.map { challengeApiModel ->
                     val userApiModel = users.first { it.id == challengeApiModel.user }
-                    val distance = location.let { currentLocation ->
-                        CalculationUtils.calculateDistance(
-                            currentLocation.latitude,
-                            currentLocation.longitude,
-                            challengeApiModel.location.latitude,
-                            challengeApiModel.location.longitude
-                        )
-                    }
 
                     val uiModel = UiModel(
                         userApiModel.toUiModel(),
@@ -57,11 +49,12 @@ class ChallengeRepositoryImpl @Inject constructor(
                             wins = CalculationUtils.calculateNumberOfWins(challengeApiModel.matches),
                             rating = CalculationUtils.calculateAverageRating(challengeApiModel.ratings)
                         ),
-                        distance = distance
+                        challengeApiModel.location.latitude,
+                        challengeApiModel.location.longitude
                     )
 
-                    uiModel.toUiModel()
-                }.sortedBy { it.distance }
+                    uiModel
+                }
             }
 
             return combinedFlow

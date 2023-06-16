@@ -10,5 +10,7 @@ package com.iheke.ispy.challenges.presentation.model
 data class UiModel(
     val userUiModel: UserUiModel,
     val challengesUiModel: ChallengesUiModel,
-    val distance: Double
+    val latitude: Double = 0.0,
+    val longitude: Double = 0.0,
+    val distance: Double = 0.0
 )

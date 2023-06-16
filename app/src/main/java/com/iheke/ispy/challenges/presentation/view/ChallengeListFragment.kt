@@ -21,10 +21,12 @@ import kotlinx.coroutines.launch
 /**
  * The ChallengeListFragment class is responsible for displaying a list of challenges.
  */
-class ChallengeListFragment : Fragment() {
+class ChallengeListFragment : Fragment(), ChallengeClickListener {
 
     private val viewModel: ChallengeViewModel by activityViewModels()
     private lateinit var binding: FragmentChallengeListBinding
+    private val challengeUiModel: MutableList<ChallengeUiModel> = mutableListOf()
+    private lateinit var adapter: ChallengeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +43,7 @@ class ChallengeListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.title = getString(R.string.near_me)
+        initializeAdapter()
         startObservers()
     }
 
@@ -50,8 +53,12 @@ class ChallengeListFragment : Fragment() {
     private fun observeChallengeState() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.viewState.collect { state ->
-                binding.challengesViewState = state
-                updateChallenges(state.challengeUiModel)
+                viewModel.viewState.collect { state ->
+                    binding.challengesViewState = state
+                    challengeUiModel.clear()
+                    challengeUiModel.addAll(state.challengeUiModel)
+                    adapter.notifyDataSetChanged()
+                }
             }
         }
     }
@@ -87,12 +94,17 @@ class ChallengeListFragment : Fragment() {
     }
 
     /**
-     * Updates the challenges in the UI with the given list of challenge UI models.
-     *
-     * @param challenges The list of challenge UI models to be displayed.
+     * Initializes the adapter with an empty list of challenges.
      */
-    private fun updateChallenges(challenges: List<ChallengeUiModel>) {
-        val adapter = ChallengeAdapter(challenges, viewModel)
+    private fun initializeAdapter() {
+        adapter = ChallengeAdapter(
+            challengeUiModel, this
+        )
         binding.recyclerViewChallenges.adapter = adapter
     }
+
+    override fun onClick(image: String, hint: String) {
+        viewModel.onChallengeClicked(image, hint)
+    }
+
 }

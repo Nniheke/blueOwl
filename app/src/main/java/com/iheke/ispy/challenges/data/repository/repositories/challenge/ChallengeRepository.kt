@@ -2,6 +2,7 @@ package com.iheke.ispy.challenges.data.repository.repositories.challenge
 
 import android.location.Location
 import com.iheke.ispy.challenges.presentation.model.ChallengeUiModel
+import com.iheke.ispy.challenges.presentation.model.UiModel
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -15,5 +16,5 @@ interface ChallengeRepository {
      * @param location The current location used for fetching challenges.
      * @return A flow of lists of [ChallengeUiModel] representing the fetched challenges data.
      */
-    suspend fun fetchData(location: Location): Flow<List<ChallengeUiModel>>
+    suspend fun fetchData(): Flow<List<UiModel>>
 }

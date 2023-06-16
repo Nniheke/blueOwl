@@ -3,6 +3,7 @@ package com.iheke.ispy.challenges.domain.usecases
 import android.location.Location
 import com.iheke.ispy.challenges.data.repository.repositories.challenge.ChallengeRepository
 import com.iheke.ispy.challenges.presentation.model.ChallengeUiModel
+import com.iheke.ispy.challenges.presentation.model.UiModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -23,5 +24,5 @@ class FetchChallengesUseCase @Inject constructor(
      * @throws Exception if an error occurs during the data fetching process.
      */
     @Throws(Exception::class)
-    suspend fun execute(location: Location): Flow<List<ChallengeUiModel>> = challengeRepository.fetchData(location)
+    suspend fun execute(): Flow<List<UiModel>> = challengeRepository.fetchData()
 }
