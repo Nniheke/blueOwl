@@ -37,7 +37,7 @@ object PluralsBindingAdapter {
     fun setPluralsWithDouble(view: TextView, value: Double) {
         val context = view.context
         val resourceId = R.plurals.average_challenge_rating
-        val quantity = value.toInt() // Convert the double value to an integer if necessary
+        val quantity = value.toInt()
         val formattedValue = String.format("%.2f", value)
         val formattedString =
             context.resources.getQuantityString(resourceId, quantity, formattedValue)

@@ -16,13 +16,11 @@ import com.iheke.ispy.challenges.presentation.event.Event
 import com.iheke.ispy.challenges.presentation.model.ChallengeUiModel
 import com.iheke.ispy.challenges.presentation.viewmodel.ChallengeViewModel
 import com.iheke.ispy.databinding.FragmentChallengeListBinding
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 /**
  * The ChallengeListFragment class is responsible for displaying a list of challenges.
  */
-@AndroidEntryPoint
 class ChallengeListFragment : Fragment() {
 
     private val viewModel: ChallengeViewModel by activityViewModels()
@@ -36,7 +34,7 @@ class ChallengeListFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_challenge_list, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.recyclerViewChallenges.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewChallenges.layoutManager = LinearLayoutManager(this.activity)
         return binding.root
     }
 

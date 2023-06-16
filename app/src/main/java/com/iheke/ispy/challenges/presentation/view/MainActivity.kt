@@ -8,52 +8,59 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph
 import androidx.navigation.fragment.NavHostFragment
 import com.iheke.ispy.R
 import com.iheke.ispy.challenges.domain.permission.Permission
 import com.iheke.ispy.challenges.domain.permission.PermissionState
-import com.iheke.ispy.challenges.presentation.viewmodel.ChallengeViewModel
 import com.iheke.ispy.challenges.presentation.event.Event
+import com.iheke.ispy.challenges.presentation.viewmodel.ChallengeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: ChallengeViewModel by viewModels()
     private lateinit var navController: NavController
+    private lateinit var navGraph: NavGraph
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        // Find the NavHostFragment and obtain its NavController
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        // Inflate the navigation graph and set it to the NavController
-        val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
+        val currentDestinationId = savedInstanceState?.getInt("currentDestination", 0) ?: 0
+        navGraph = if (currentDestinationId != 0) {
+            val inflater = navController.navInflater
+            inflater.inflate(R.navigation.nav_graph).apply {
+                setStartDestination(currentDestinationId)
+            }
+        } else {
+            navController.navInflater.inflate(R.navigation.nav_graph)
+        }
         navController.graph = navGraph
 
-        // Check for location permission and retrieve current location if granted
-        val locationPermission =
-            Permission(Manifest.permission.ACCESS_FINE_LOCATION, PermissionState.REQUEST_PERMISSION)
+        val locationPermission = Permission(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            PermissionState.REQUEST_PERMISSION
+        )
         if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
                 this,
                 locationPermission.name
             )
         ) {
-            viewModel.retrieveCurrentLocation()
+            if(savedInstanceState == null) viewModel.retrieveCurrentLocation()
         } else {
             val permissionsToRequest = setOf(locationPermission)
             viewModel.requestPermissions(permissionsToRequest)
         }
 
-        // Observe the location permission event
         observeLocationEvent()
     }
-
     /**
      * Observes the location permission event and takes appropriate actions based on the event type.
      */
@@ -69,6 +76,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("currentDestination", navController.currentDestination?.id ?: 0)
     }
 
     override fun onRequestPermissionsResult(
